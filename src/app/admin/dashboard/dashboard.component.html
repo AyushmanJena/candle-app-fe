@@ -1,0 +1,23 @@
+<div>
+
+
+  <div class=" bg-gray-100 flex flex-row items-center justify-between p-8">
+    <h1 class="text-3xl font-bold">Admin Dashboard</h1>
+
+    <button class=" bg-red-600 text-white px-4 py-2 rounded"
+            (click)="logout()">
+      Logout
+    </button>
+  </div>
+
+  <div class="flex flex-row gap-2">
+    <button (click)="adminOrders()" class="px-8 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-100 font-bold rounded-t-md transition">Orders</button>
+    <button (click)="adminProducts()" class="px-8 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-100 font-bold rounded-t-md transition">Products</button>
+    <button (click)="adminCoupons()" class="px-8 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-gray-100 font-bold rounded-t-md transition">Coupons</button>
+  </div>
+
+
+  <router-outlet></router-outlet>
+</div>
+
+

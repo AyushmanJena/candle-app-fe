@@ -1,0 +1,64 @@
+<div class="w-full max-w-[1080px]  mx-auto">
+  <div class="mt-12 flex flex-col ">
+    <div class="flex flex-row  p-12 gap-12">
+      <div class="relative aspect-[4/3] max-w-96 w-full flex-shrink-0 group">
+
+        <!-- IMAGE -->
+        <img
+          [src]="images[currentImageIndex]"
+          alt="Product Image"
+          class="w-full h-full object-cover rounded-lg transition-opacity duration-300"
+        />
+
+        <!-- PREV BUTTON -->
+        <button
+          (click)="prevImage()"
+          class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white
+           p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+        >
+          ◁
+        </button>
+
+        <!-- NEXT BUTTON -->
+        <button
+          (click)="nextImage()"
+          class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white
+           p-2 rounded-full opacity-0 group-hover:opacity-100 transition"
+        >
+          ▷
+        </button>
+      </div>
+
+
+      <div class="p-4  flex flex-col justify-around w-full">
+        <p class="text-2xl">{{product.title}}</p>
+
+        <div class="w-full p-2 flex flex-row items-center gap-6">
+          <div class="text-3xl font-medium">₹{{product.discountedPrice}}</div>
+          <div *ngIf="product.originalPrice !== product.discountedPrice" class="line-through text-xl">₹{{product.originalPrice}}</div>
+        </div>
+
+        <div>
+          <button class="bg-black text-white  px-14 py-3 border border-black
+                     hover:bg-white hover:text-black rounded-md transition cursor-pointer">
+            Add To Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="px-12">
+      <h3 class="text-xl font-medium">Product Description</h3>
+      {{product.description}}
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center m-12 my-16 gap-8">
+    <h2 class="text-3xl">Similar Products</h2>
+    <div class="flex flex-row gap-6">
+      <div *ngFor="let productData of bestSellersList">
+        <app-product-card [productCardData]="productData" [showAddToCartButton]="false"></app-product-card>
+      </div>
+    </div>
+  </div>
+</div>

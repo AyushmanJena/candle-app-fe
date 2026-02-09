@@ -1,0 +1,55 @@
+<div class=" flex flex-col justify-center items-center max-w-[900px] mx-auto">
+  <div class="flex flex-row justify-start w-full mt-20 mb-8">
+    <h2 class="text-3xl">Place Order</h2>
+  </div>
+
+<!--  cart cards-->
+  <div class="flex flex-col w-full  gap-2 mb-3" *ngFor="let product of cartItems">
+    <app-cart-product-card [cartProduct]="product" ]></app-cart-product-card>
+  </div>
+  <div class="w-full h-px bg-gray-700 my-4"></div>
+
+  <div class="w-full flex justify-end mr-8 mb-32">
+    <div class="w-full max-w-[350px]">
+      <table class="w-full text-sm">
+        <tbody>
+        <tr class="flex justify-between py-2 text-gray-600">
+          <td>Subtotal</td>
+          <td class="font-medium">₹{{subTotal}}</td>
+        </tr>
+
+        <tr class="flex justify-between py-2 text-gray-600">
+          <td>Delivery</td>
+          <td class="font-medium">₹{{deliveryCharge}}</td>
+        </tr>
+
+        <tr class="flex justify-between py-2 " *ngIf="couponApplied">
+          <td>Coupon : <span class="text-green-600">[ {{coupon.couponCode}} ]</span></td>
+          <td class="font-medium text-green-600">-₹{{coupon.discountAmount}}</td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <div class="w-full h-px bg-gray-200 my-3"></div>
+          </td>
+        </tr>
+
+        <tr class="flex justify-between py-2 text-xl font-bold text-gray-900">
+          <td>Grand Total</td>
+          <td>₹{{grandTotal}}</td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <button class="bg-black text-white w-full px-14 py-3 border border-black
+        hover:bg-white hover:text-black rounded-md hover:border-black transition cursor-pointer" (click)="checkoutPage()">
+              Proceed
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

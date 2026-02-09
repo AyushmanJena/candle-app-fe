@@ -1,0 +1,12 @@
+<app-hero-section></app-hero-section>
+
+<div class="w-full max-w-[1080px]  mx-auto mt-30">
+  <div class="flex flex-col justify-center items-center my-30" *ngFor="let collection of collectionsList">
+    <h2 class="text-3xl">{{collection.collectionTitle}}</h2>
+    <div class="p-8 flex flex-row justify-center flex-wrap gap-10">
+      <div *ngFor="let productData of collection.productsList">
+        <app-product-card [productCardData]="productData" [showAddToCartButton]="true"></app-product-card>
+      </div>
+    </div>
+  </div>
+</div>

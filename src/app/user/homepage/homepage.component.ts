@@ -1,0 +1,62 @@
+import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+import {HeroSectionComponent} from './hero-section/hero-section.component';
+import {CollectionCardComponent} from './collection-card/collection-card.component';
+import {ProductCardComponent} from './product-card/product-card.component';
+import {NgForOf} from '@angular/common';
+import {CollectionCardData, ProductCardData} from '../../products.interface';
+
+@Component({
+  selector: 'app-homepage',
+  imports: [
+    HeroSectionComponent,
+    CollectionCardComponent,
+    ProductCardComponent,
+    NgForOf
+  ],
+  templateUrl: './homepage.component.html',
+  styleUrl: './homepage.component.css'
+})
+export class HomepageComponent {
+
+  constructor(private router: Router) {
+  }
+
+  collectionsList: CollectionCardData[] = [
+    {title: "Gift Sets", imageUrl: "/collection/collection-01.jpg"},
+    {title: "Premium Candles", imageUrl: "/collection/collection-02.jpg"},
+    {title: "Waterproof Candles", imageUrl: "/collection/collection-03.jpg"},
+  ];
+
+  bestSellersList: ProductCardData[] = [
+    {
+      productId:1,
+      title: "Premium Scented Heart Shaped Candles with midnight autumn fragrance",
+      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
+      description: "hello this is test description",
+      discountedPrice: 99,
+      originalPrice: 120,
+    },
+    {
+      productId:2,
+      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
+      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
+      description: "hello this is test description",
+      discountedPrice: 99,
+      originalPrice: 99,
+    },
+    {
+      productId:3,
+      title: "Third Premium Scented Heart Shaped Candles with midnight autumn fragrance",
+      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
+      description: "hello this is test description",
+      discountedPrice: 99,
+      originalPrice: 120,
+    }
+  ]
+
+
+  adminLogin(){
+    this.router.navigateByUrl('/login');
+  }
+}

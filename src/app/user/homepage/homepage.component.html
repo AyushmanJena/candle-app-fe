@@ -1,0 +1,79 @@
+<div>
+<!--   hero section-->
+  <div>
+    <app-hero-section></app-hero-section>
+  </div>
+
+<!--  featured collections section -->
+  <div class="flex flex-col items-center m-12 my-24 gap-8">
+    <h2 class="text-3xl">Featured Collections</h2>
+    <div class="flex flex-row gap-6">
+      <div *ngFor="let collectionData of collectionsList" >
+        <app-collection-card [collectionData]="collectionData"></app-collection-card>
+      </div>
+
+    </div>
+
+    <button class="bg-black text-white px-14 py-4 border border-black
+        hover:bg-white hover:text-black hover:border-black transition cursor-pointer">
+      View All
+    </button>
+
+  </div>
+
+<!--  best sellers section -->
+  <div class="flex flex-col items-center m-12 my-24 gap-8">
+    <h2 class="text-3xl">Best Sellers</h2>
+    <div class="flex flex-row gap-6">
+      <div *ngFor="let productData of bestSellersList">
+        <app-product-card [productCardData]="productData" [showAddToCartButton]="false"></app-product-card>
+      </div>
+    </div>
+
+    <button class="bg-black text-white px-14 py-4 border border-black
+        hover:bg-white hover:text-black hover:border-black transition cursor-pointer">
+      View All
+    </button>
+  </div>
+
+
+<!--  testimonials section-->
+  <div class="flex flex-col items-center my-20 gap-8 w-full ">
+    <h2 class="text-3xl">What Our Clients Say</h2>
+
+    <!-- Row container -->
+    <div class="flex flex-row justify-between items-center max-w-3xl w-full mx-auto">
+
+      <div class=" w-44 h-44">
+        <svg
+          class="w-full h-full"
+          viewBox="0 0 437 392"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M128.87 332.412C128.87 332.412 27.3698 265.412 3.86975 181.412C-19.6302 97.4118 85.3698 1.41175 146.37 1.41175C207.37 1.41175 244.37 101.412 218.87 101.412C193.37 101.412 254.37 12.9118 316.87 1.41175C379.37 -10.0882 447.87 89.4118 434.37 181.412C420.87 273.412 218.87 390.912 218.87 390.912L128.87 332.412Z"
+            stroke="black"
+          />
+        </svg>
+      </div>
+
+      <div class="">
+        <div class="relative z-20 flex justify-end">
+          <blockquote class="inline-block text-left p-6 md:p-10 max-w-lg">
+            <p class="text-4xl leading-none text-gray-400 mb-4">&ldquo;</p>
+            <p class="text-lg md:text-xl text-gray-700 leading-relaxed italic">
+              Great candles! loved the scented fragrance and also the mermaid picture that was sent along with it.
+            </p>
+            <p class="text-4xl leading-none text-gray-400 mt-4 text-right">&rdquo;</p>
+          </blockquote>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+<button (click)="adminLogin()">Admin Login</button>

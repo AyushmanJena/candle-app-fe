@@ -1,0 +1,43 @@
+<div class="w-full rounded-[12px] shadow-sm border">
+  <div class="flex flex-row justify-between items-stretch p-2">
+
+    <div class="w-[350px] h-[150px]  rounded-[8px] mr-4 hover:cursor-pointer" (click)="redirectToProductDetails(cartProduct.productId)">
+      <img
+        [src]="cartProduct.imageUrl"
+        class="h-full w-full object-cover rounded-[8px]"
+      >
+    </div>
+
+
+    <div class=" w-full flex flex-row justify-between">
+
+      <div class=" h-full flex flex-col justify-between p-4 max-w-[60%]">
+        <p class="font-semibold">{{cartProduct.title}}</p>
+        <div class="flex flex-row items-center gap-10">
+          <p  class="text-xl">₹{{ cartProduct.discountedPrice }}</p>
+          <div *ngIf="!cartProduct.discountedPrice" class="line-through font-light">₹{{cartProduct.originalPrice}}</div>
+        </div>
+      </div>
+
+      <div class="h-full flex flex-col items-start justify-between p-4">
+        <div class="bg-black text-white flex flex-row justify-between items-center w-28 rounded-lg border border-gray-300">
+          <button type="button" (click)="decrement()" class="w-9 h-9 rounded-lg bg-black  flex items-center justify-center
+             text-lg font-semibold hover:bg-gray-500">
+            −
+          </button>
+          <div class="font-semibold">{{cartProduct.quantity}}</div>
+          <button type="button" (click)="increment()" class="w-9 h-9 rounded-lg bg-black  flex items-center justify-center
+             text-lg font-semibold hover:bg-gray-500">
+           +
+          </button>
+        </div>
+        <div  class="flex flex-row justify-end bg-white text-xl w-full">
+          <p class="font-medium">₹{{total}}</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

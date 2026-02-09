@@ -1,0 +1,49 @@
+<div
+  class="w-72 rounded-[16px] cursor-pointer border border-neutral-200
+         bg-white hover:border-gray-400 hover:bg-gray-50 transition-colors duration-400"
+  (click)="redirectToProductDetails(productCardData.productId)"
+>
+  <div class="flex flex-col p-4">
+
+    <!-- Image -->
+    <div class="w-full h-64 overflow-hidden rounded-[12px] bg-neutral-50">
+      <img
+        [src]="productCardData.imageUrl"
+        class="h-full w-full object-cover"
+      >
+    </div>
+
+    <!-- Title -->
+    <div class="mt-4 text-sm text-neutral-800 font-medium leading-snug line-clamp-2">
+      {{productCardData.title}}
+    </div>
+
+    <!-- Price Section -->
+    <div class="w-full mt-3 flex items-baseline gap-3">
+      <div class="text-xl font-semibold text-neutral-900">
+        ₹{{productCardData.discountedPrice}}
+      </div>
+
+      <div
+        *ngIf="productCardData.originalPrice !== productCardData.discountedPrice"
+        class="text-sm text-neutral-400 line-through"
+      >
+        ₹{{productCardData.originalPrice}}
+      </div>
+    </div>
+
+    <!-- Add to Cart -->
+    <div *ngIf="showAddToCartButton" class="mt-4">
+      <button
+        class="w-full py-2.5 text-sm font-medium
+               border border-neutral-900
+               rounded-md
+               hover:bg-neutral-900 hover:text-white
+               transition-colors duration-200"
+      >
+        Add To Cart
+      </button>
+    </div>
+
+  </div>
+</div>
