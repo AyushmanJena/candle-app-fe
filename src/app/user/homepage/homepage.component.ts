@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {HeroSectionComponent} from './hero-section/hero-section.component';
-import {CollectionCardComponent} from './collection-card/collection-card.component';
+import {CollectionCardComponent} from '../collections/collection-card/collection-card.component';
 import {ProductCardComponent} from './product-card/product-card.component';
 import {NgForOf} from '@angular/common';
 import {CollectionCardData, ProductCardData} from '../../products.interface';
@@ -23,9 +23,9 @@ export class HomepageComponent {
   }
 
   collectionsList: CollectionCardData[] = [
-    {title: "Gift Sets", imageUrl: "/collection/collection-01.jpg"},
-    {title: "Premium Candles", imageUrl: "/collection/collection-02.jpg"},
-    {title: "Waterproof Candles", imageUrl: "/collection/collection-03.jpg"},
+    {title: "Gift Sets", imageUrl: "/collection/collection-01.jpg", url:"gift-sets"},
+    {title: "Premium Candles", imageUrl: "/collection/collection-02.jpg", url: "premium-candles"},
+    {title: "Waterproof Candles", imageUrl: "/collection/collection-03.jpg", url: "waterproof-candles"},
   ];
 
   bestSellersList: ProductCardData[] = [
@@ -54,9 +54,4 @@ export class HomepageComponent {
       originalPrice: 120,
     }
   ]
-
-
-  adminLogin(){
-    this.router.navigateByUrl('/login');
-  }
 }

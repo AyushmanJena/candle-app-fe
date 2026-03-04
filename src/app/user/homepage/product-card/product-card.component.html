@@ -1,20 +1,19 @@
-<div
-  class="w-72 rounded-[16px] cursor-pointer border border-neutral-200
-         bg-white hover:border-gray-400 hover:bg-gray-50 transition-colors duration-400"
-  (click)="redirectToProductDetails(productCardData.productId)"
->
+<div class="w-72 rounded-[16px]  border border-neutral-200
+         bg-white hover:border-gray-400 hover:bg-gray-50
+         transition-colors duration-400
+         group">
   <div class="flex flex-col p-4">
 
     <!-- Image -->
-    <div class="w-full h-64 overflow-hidden rounded-[12px] bg-neutral-50">
-      <img
-        [src]="productCardData.imageUrl"
-        class="h-full w-full object-cover"
-      >
+    <div class="w-full h-64 overflow-hidden rounded-[12px] bg-neutral-50 cursor-pointer">
+      <img [src]="productCardData.imageUrl" class="h-full w-full object-cover
+               transition-transform duration-500 ease-out
+               group-hover:scale-105" (click)="redirectToProductDetails(productCardData.productId)">
     </div>
 
     <!-- Title -->
-    <div class="mt-4 text-sm text-neutral-800 font-medium leading-snug line-clamp-2">
+    <div class="mt-4 text-sm text-neutral-800 font-medium leading-snug line-clamp-2 cursor-pointer"
+      (click)="redirectToProductDetails(productCardData.productId)">
       {{productCardData.title}}
     </div>
 
@@ -24,25 +23,45 @@
         ₹{{productCardData.discountedPrice}}
       </div>
 
-      <div
-        *ngIf="productCardData.originalPrice !== productCardData.discountedPrice"
-        class="text-sm text-neutral-400 line-through"
-      >
+      <div *ngIf="productCardData.originalPrice !== productCardData.discountedPrice"
+        class="text-sm text-neutral-400 line-through">
         ₹{{productCardData.originalPrice}}
       </div>
     </div>
 
     <!-- Add to Cart -->
     <div *ngIf="showAddToCartButton" class="mt-4">
-      <button
-        class="w-full py-2.5 text-sm font-medium
-               border border-neutral-900
-               rounded-md
-               hover:bg-neutral-900 hover:text-white
-               transition-colors duration-200"
-      >
+
+      <!-- Add Button -->
+      <button *ngIf="inCartQuantity == 0" (click)="addProductToCart()" class="w-full h-10 text-sm font-medium
+           border border-neutral-900
+           rounded-md
+           hover:bg-neutral-900 hover:text-white
+           transition-all duration-200 cursor-pointer">
         Add To Cart
       </button>
+
+      <!-- Quantity Controls -->
+      <div *ngIf="inCartQuantity > 0" class="w-full h-10 flex items-center justify-between
+           border border-neutral-900 bg-black rounded-md transition-all duration-200">
+        <button type="button" (click)="decreaseQuantity()" class="w-10 h-full flex items-center justify-center
+             text-lg font-medium
+             hover:bg-neutral-700 text-white
+             transition-all duration-200 cursor-pointer">
+          −
+        </button>
+
+        <div class="text-sm font-medium text-white">
+          {{ inCartQuantity }}
+        </div>
+
+        <button type="button" (click)="increaseQuantity()" class="w-10 h-full flex items-center justify-center
+             text-lg font-medium hover:bg-neutral-700  text-white
+             transition-all duration-200 cursor-pointer">
+          +
+        </button>
+      </div>
+
     </div>
 
   </div>

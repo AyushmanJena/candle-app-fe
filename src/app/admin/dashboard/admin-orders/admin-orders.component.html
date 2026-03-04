@@ -1,5 +1,10 @@
 <div class="w-full min-h-screen flex flex-col items-center py-10">
   <div class="w-[75%] rounded-lg border-1  overflow-hidden">
+
+    <div class=" w-full h-14 flex flex-row justify-between items-center px-4 py-4">
+      <h1 class="text-xl font-semibold tracking-wide">Order Management</h1>
+    </div>
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
 
       <ng-container matColumnDef="orderId">
@@ -42,7 +47,7 @@
             class="w-[200px] max-w-[200px] px-2 whitespace-nowrap">
           <div class="flex items-center justify-center gap-2">
             <button
-              class="px-2 py-1 text-sm rounded bg-yellow-400 hover:bg-yellow-500 cursor-pointer"
+              class="px-2 py-1 text-sm rounded bg-green-400 hover:bg-green-500 w-18 cursor-pointer"
             (click)="displayOrderDetailsDialog(order.orderId)">
               View
             </button>
@@ -80,7 +85,7 @@
         <div class="flex flex-row items-center justify-between w-full">
           <h1 class="text-2xl font-medium">VIEW ORDER DETAILS</h1>
           <div
-            class="bg-gray-500 text-white h-8 w-18 flex flex-row justify-center items-center rounded-md"
+            class="bg-gray-500 text-white h-8 w-18 flex flex-row justify-center items-center cursor-pointer rounded-md"
             (click)="onEditDialogClose()"
           >X</div>
         </div>

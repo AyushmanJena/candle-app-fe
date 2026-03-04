@@ -10,6 +10,7 @@ export interface ProductCardData{
 export interface CollectionCardData{
   title: string;
   imageUrl: string;
+  url: string;
 }
 
 export interface ProductDetails{

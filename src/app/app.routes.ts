@@ -9,6 +9,10 @@ import {ProductPageComponent} from './user/product-page/product-page.component';
 import {CollectionsComponent} from './user/collections/collections.component';
 import {AboutUsComponent} from './user/about-us/about-us.component';
 import {CheckoutComponent} from './user/cart-page/checkout/checkout.component';
+import {
+  CollectionsMainContentComponent
+} from './user/collections/collections-main-content/collections-main-content.component';
+import {CollectionDetailComponent} from './user/collections/collection-detail/collection-detail.component';
 
 export const routes: Routes = [
 
@@ -17,7 +21,23 @@ export const routes: Routes = [
   {path: 'cart', component: CartPageComponent},
   {path: 'listing-page', component: ListingPageComponent},
   {path: 'product/:id', component: ProductPageComponent},
-  {path: 'collections', component: CollectionsComponent},
+
+  {
+    path: 'collections',
+    component: CollectionsComponent,
+    children: [
+      {
+        path: '',
+        component: CollectionsMainContentComponent
+      },
+      {
+        path: ':collectionTitle',
+        component: CollectionDetailComponent
+      }
+    ]
+  },
+
+
   {path: 'about-us', component: AboutUsComponent},
   {path: 'cart', component: CartPageComponent},
   {path: 'checkout', component: CheckoutComponent},

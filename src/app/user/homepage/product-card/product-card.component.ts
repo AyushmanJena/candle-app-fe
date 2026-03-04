@@ -23,4 +23,19 @@ export class ProductCardComponent {
   redirectToProductDetails(productId: number){
     this.router.navigateByUrl('/product/'+productId);
   }
+
+  addProductToCart(){
+    console.log('Product Add to Cart');
+    this.increaseQuantity();
+  }
+
+  inCartQuantity: number = 0;
+
+  increaseQuantity(){
+    this.inCartQuantity++;
+  }
+
+  decreaseQuantity(){
+    this.inCartQuantity--;
+  }
 }

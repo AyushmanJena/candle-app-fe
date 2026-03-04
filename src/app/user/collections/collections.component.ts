@@ -3,13 +3,15 @@ import {HeroSectionComponent} from '../homepage/hero-section/hero-section.compon
 import {NgForOf} from '@angular/common';
 import {ProductCardComponent} from '../homepage/product-card/product-card.component';
 import {CollectionList, ProductCardData} from '../../products.interface';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-collections',
   imports: [
     HeroSectionComponent,
     NgForOf,
-    ProductCardComponent
+    ProductCardComponent,
+    RouterOutlet
   ],
   templateUrl: './collections.component.html',
   styleUrl: './collections.component.css'

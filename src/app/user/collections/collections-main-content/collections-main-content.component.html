@@ -1,0 +1,34 @@
+<!--  <div class="flex flex-col justify-center items-center my-30" *ngFor="let collection of collectionsList">-->
+<!--    <h2 class="text-3xl">{{collection.collectionTitle}}</h2>-->
+<!--    <div class="p-8 flex flex-row justify-center flex-wrap gap-10">-->
+<!--      <div *ngFor="let productData of collection.productsList">-->
+<!--        <app-product-card [productCardData]="productData" [showAddToCartButton]="true"></app-product-card>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<div class="flex flex-col justify-center items-center">
+
+  <h2 class="text-3xl">All Collections</h2>
+
+  <div class="flex flex-row flex-wrap justify-center w-full gap-12 py-12 pb-72">
+
+    <div *ngFor="let card of collectionCardsList"
+         class="w-[45%]">
+
+      <!-- Image Card -->
+      <div class="h-72  cursor-pointer" (click)="navigateToCollectionDetails(card.url)">
+        <img [src]="card.imageUrl"
+             class="w-full h-full object-cover rounded-xl hover:border-2 border-white"
+             alt="collection-img">
+      </div>
+
+      <!-- Title Below -->
+      <h2 class="mt-4 text-center text-xl  ">
+        {{ card.title }}
+      </h2>
+
+    </div>
+
+  </div>
+</div>
