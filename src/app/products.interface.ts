@@ -5,6 +5,7 @@ export interface ProductCardData{
   description: string;
   discountedPrice: number;
   originalPrice: number;
+  inStock: boolean;
 }
 
 export interface CollectionCardData{

@@ -21,6 +21,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 120,
+        inStock: true
     },
     {
       productId:2,
@@ -29,6 +30,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },
     {
       productId:3,
@@ -37,6 +39,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 120,
+        inStock: true
     },
     {
       productId:2,
@@ -45,6 +48,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },
     {
       productId:2,
@@ -53,6 +57,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },
     {
       productId:2,
@@ -61,6 +66,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },{
       productId:2,
       title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
@@ -68,6 +74,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },{
       productId:2,
       title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
@@ -75,6 +82,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },{
       productId:2,
       title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
@@ -82,6 +90,7 @@ export class CollectionDetailComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     }
 
 

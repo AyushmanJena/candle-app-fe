@@ -36,6 +36,7 @@ export class HomepageComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 120,
+        inStock: true
     },
     {
       productId:2,
@@ -44,6 +45,7 @@ export class HomepageComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 99,
+        inStock: true
     },
     {
       productId:3,
@@ -52,6 +54,7 @@ export class HomepageComponent {
       description: "hello this is test description",
       discountedPrice: 99,
       originalPrice: 120,
+        inStock: true
     }
   ]
 }

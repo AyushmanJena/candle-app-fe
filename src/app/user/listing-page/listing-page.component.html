@@ -1,18 +1,16 @@
 <div class="w-full max-w-[1080px]  mx-auto">
 
 
-<!--  header section-->
+  <!--  header section-->
   <div class="flex flex-col gap-2">
     <div class=" p-5 flex flex-row gap-2 justify-center w-full ">
 
-        <input
-          type="text" placeholder="Search Here" aria-label="Search"
-          class=" search-input w-[80%] h-14 px-8
-              bg-gray-200 text-gray-900 placeholder-gray-500 rounded-full border border-transparent "/>
+      <input type="text" placeholder="Search Here" aria-label="Search" [(ngModel)]="searchText"
+        (input)="filterProducts()" class="search-input w-[80%] h-14 px-8
+  bg-gray-200 text-gray-900 placeholder-gray-500 rounded-full border border-transparent" />
 
-      <button
-        type="button" id="filters-btn" aria-label="Apply Filters" (click)="toggleFiltersPopup()"
-        class=" flex-shrink-0 h-14 w-[20%] bg-black text-white rounded-full transition duration-200 hover:bg-gray-500">
+      <button type="button" id="filters-btn" aria-label="Apply Filters" (click)="toggleFiltersPopup()"
+        class=" flex-shrink-0 h-14 w-[20%] bg-black text-white rounded-full transition duration-200 hover:bg-gray-500 cursor-pointer">
         Filters
       </button>
 
@@ -20,19 +18,20 @@
     <div class="px-6 flex flex-row text-gray-700 gap-3 items-center" *ngIf="appliedFilters.length > 0">
       Applied Filters :
       <div *ngFor="let s of appliedFilters"
-           class="bg-gray-100 py-1 px-3 rounded-md flex flex-row justify-between items-center gap-2">
+        class="bg-gray-100 py-1 px-3 rounded-md flex flex-row justify-between items-center gap-2">
 
         <p>{{s}}</p>
 
         <!-- remove filter button -->
-        <div class="w-5 h-5  flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-800" (click)="removeFilter(s)">
+        <div class="w-5 h-5  flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-800"
+          (click)="removeFilter(s)">
           <svg class="w-2 h-2" fill="#A3A3A3" viewBox="0 0 460.775 460.775">
             <path d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55
         c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55
         c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505
         c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55
         l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719
-        c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"/>
+        c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z" />
           </svg>
         </div>
 
@@ -41,62 +40,49 @@
     </div>
   </div>
 
-<!--  products cards section-->
+  <!--  products cards section-->
   <div class="p-8 flex flex-row justify-center flex-wrap gap-10 pb-24">
-    <div *ngFor="let productData of productsList" >
-        <app-product-card [productCardData]="productData" [showAddToCartButton]="true"></app-product-card>
-      </div>
+    <div *ngFor="let productData of filteredProductsList">
+      <app-product-card [productCardData]="productData" [showAddToCartButton]="true"></app-product-card>
+    </div>
   </div>
 </div>
 
 
 <!-- FILTER POPUP -->
-<div class="dialog-overlay"  *ngIf="showFiltersPopup">
-  <div id="filters-popup" class="absolute top-24 mt-2 w-96 bg-white shadow-lg rounded-xl p-5 border flex flex-col items-center">
-  <h3 class="text-2xl font-bold">Filters</h3>
-        <form (ngSubmit)="applyFilters()">
+<div class="dialog-overlay" *ngIf="showFiltersPopup">
+  <div id="filters-popup"
+    class="absolute top-24 mt-2 w-96 bg-white shadow-lg rounded-xl p-5 border flex flex-col items-center">
+    <h3 class="text-2xl font-bold">Filters</h3>
+    <form (ngSubmit)="applyFilters()">
 
-          <!-- Price Filter -->
-          <label class="font-semibold text-gray-600">Price</label>
-          <div class="flex gap-2 mt-2 mb-4">
-            <input type="number" placeholder="Min"
-                   [(ngModel)]="filters.priceMin" name="priceMin"
-                   class="w-full px-3 py-2 bg-gray-100 rounded-lg" />
-            <input type="number" placeholder="Max"
-                   [(ngModel)]="filters.priceMax" name="priceMax"
-                   class="w-full px-3 py-2 bg-gray-100 rounded-lg" />
-          </div>
+      <!-- Price Filter -->
+      <label class="font-semibold text-gray-600">Price</label>
+      <div class="flex gap-2 mt-2 mb-4">
+        <input type="number" placeholder="Min" [(ngModel)]="filters.priceMin" name="priceMin"
+          class="w-full px-3 py-2 bg-gray-100 rounded-lg" />
+        <input type="number" placeholder="Max" [(ngModel)]="filters.priceMax" name="priceMax"
+          class="w-full px-3 py-2 bg-gray-100 rounded-lg" />
+      </div>
 
-          <!-- Quantity Filter -->
-          <label class="font-semibold text-gray-600">Quantity</label>
-          <input type="number"
-                 [(ngModel)]="filters.quantity"
-                 name="quantity"
-                 placeholder="Enter quantity"
-                 class="w-full mt-2 mb-4 px-3 py-2 bg-gray-100 rounded-lg" />
+      <!-- Availability Filter -->
+      <label class="font-semibold text-gray-600">Availability</label>
+      <select [(ngModel)]="filters.availability" name="availability"
+        class="w-full mt-2 mb-4 px-3 py-2 bg-gray-100 rounded-lg">
+        <option value="all">All</option>
+        <option value="instock">In Stock</option>
+        <option value="outofstock">Out of Stock</option>
+      </select>
 
-          <!-- Availability Filter -->
-          <label class="font-semibold text-gray-600">Availability</label>
-          <select [(ngModel)]="filters.availability"
-                  name="availability"
-                  class="w-full mt-2 mb-4 px-3 py-2 bg-gray-100 rounded-lg">
-            <option value="all">All</option>
-            <option value="instock">In Stock</option>
-            <option value="outofstock">Out of Stock</option>
-          </select>
+      <div class="flex justify-between">
+        <button type="button" (click)="closeFiltersPopup()" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 cursor-pointer">
+          Cancel
+        </button>
 
-          <div class="flex justify-between">
-            <button type="button"
-                    (click)="closeFiltersPopup()"
-                    class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400">
-              Cancel
-            </button>
-
-            <button type="submit"
-                    class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700">
-              Apply
-            </button>
-          </div>
-        </form>
-    </div>
+        <button type="submit" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-700 cursor-pointer">
+          Apply
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

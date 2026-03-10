@@ -33,7 +33,7 @@
     <div *ngIf="showAddToCartButton" class="mt-4">
 
       <!-- Add Button -->
-      <button *ngIf="inCartQuantity == 0" (click)="addProductToCart()" class="w-full h-10 text-sm font-medium
+      <button *ngIf="productCardData.inStock && inCartQuantity == 0" (click)="addProductToCart()" class="w-full h-10 text-sm font-medium
            border border-neutral-900
            rounded-md
            hover:bg-neutral-900 hover:text-white
@@ -41,8 +41,16 @@
         Add To Cart
       </button>
 
+      <button *ngIf="productCardData.inStock === false" class="w-full h-10 text-sm font-medium
+           border border-neutral-900
+           rounded-md 
+           hover:bg-neutral-200
+           transition-all duration-200">
+        OUT OF STOCK
+      </button>
+
       <!-- Quantity Controls -->
-      <div *ngIf="inCartQuantity > 0" class="w-full h-10 flex items-center justify-between
+      <div *ngIf="productCardData.inStock && inCartQuantity > 0" class="w-full h-10 flex items-center justify-between
            border border-neutral-900 bg-black rounded-md transition-all duration-200">
         <button type="button" (click)="decreaseQuantity()" class="w-10 h-full flex items-center justify-center
              text-lg font-medium
