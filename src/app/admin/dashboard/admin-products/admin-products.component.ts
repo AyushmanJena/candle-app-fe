@@ -59,7 +59,7 @@ export class AdminProductsComponent implements OnInit {
       'stock': new FormControl(null, Validators.required),
       'description': new FormControl(null),
       'imageUrls' : new FormControl(null)
-    })
+    });
   }
 
   ngAfterViewInit() {
@@ -75,7 +75,7 @@ export class AdminProductsComponent implements OnInit {
     }
   }
 
-  displayEditDialog(id: number){
+  displayEditDialog(id?: number){
     this.editDialogShown = true;
     // editDialogData would be fetched from an API call using productId
     this.editDialogData = {productId: 1, productTitle: "Candle 1", finalPrice: 99, originalPrice: 129, stock: 12, isShown: true}

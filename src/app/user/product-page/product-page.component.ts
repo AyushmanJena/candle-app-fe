@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
-import {ProductCardData, ProductDetails} from '../../products.interface';
-import {ProductCardComponent} from '../homepage/product-card/product-card.component';
+import { Component, OnInit } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
+import { ProductCardData, ProductDetails } from '../../products.interface';
+import { ProductCardComponent } from '../homepage/product-card/product-card.component';
+import { HttpClient } from '@angular/common/http';
+import { ProductsApiService } from '../services/products-api.service';
+import { forkJoin } from 'rxjs';
+import {CartService} from '../../shared/services/cart-service.service';
 
 @Component({
   selector: 'app-product-page',
@@ -13,53 +17,79 @@ import {ProductCardComponent} from '../homepage/product-card/product-card.compon
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.css'
 })
-export class ProductPageComponent {
-  product: ProductDetails = {
-    productId: 1,
-    title: 'Heart Shaped Scented Candles, Made from pure wax and reusable',
-    imageUrl: [],
-    description: 'lorem ipsum xyz',
-    discountedPrice: 99,
-    originalPrice: 120,
-    similarProductIds: [2, 3, 4]
-  }
+export class ProductPageComponent implements OnInit {
 
-  bestSellersList: ProductCardData[] = [
-    {
-      productId:1,
-      title: "Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 120,
-    },
-    {
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-    },
-    {
-      productId:3,
-      title: "Third Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 120,
-    }
-  ]
+  bestSellersList!: ProductCardData[];
+
+  product!: ProductDetails;
+  inCartQuantity: number = 0;
 
   // image carousel
   currentImageIndex = 0;
 
-  // temp
-  images = [
-    "/product-test/01.png",
-    "/product-test/02.png",
-    "/product-test/03.png",
-  ];
+  images!: string[];
+
+  constructor(
+    private http: HttpClient,
+    private productApiService: ProductsApiService,
+    private cartService: CartService,
+  ) { }
+
+  ngOnInit() {
+    this.loadProductDetails();
+  }
+
+  loadProductDetails() {
+    // make api call to fetch product details by Id
+    this.productApiService.getProductDetailsById(1).subscribe({
+      next: (data) => {
+        this.product = data;
+        this.loadProductImages();
+        this.loadSimilarProducts();
+        this.inCartQuantity = this.cartService.getCartItemQuantityById(this.product.productId);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  loadProductImages() {
+    this.images = this.product.imageUrl;
+  }
+
+  loadSimilarProducts() {
+    const ids = this.product.similarProductIds || [];
+
+    const requests = ids.map(id =>
+      this.productApiService.getProductById(id)
+    );
+
+    forkJoin(requests).subscribe({
+      next: (data) => {
+        this.bestSellersList = data; // full list at once
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  addProductToCart() {
+    console.log('Product added to cart');
+    this.inCartQuantity++;
+    this.cartService.addToCart(this.product.productId);
+  }
+
+  increaseQuantity() {
+    this.inCartQuantity++;
+    this.cartService.addToCart(this.product.productId);
+  }
+
+  decreaseQuantity() {
+    this.inCartQuantity--;
+    this.cartService.addToCart(this.product.productId);
+  }
 
   nextImage() {
     this.currentImageIndex =

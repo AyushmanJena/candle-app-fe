@@ -1,4 +1,4 @@
-import { Component, signal, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, OnInit, OnDestroy, Input } from '@angular/core';
 
 @Component({
   selector: 'app-hero-section',
@@ -7,6 +7,7 @@ import { Component, signal, OnInit, OnDestroy } from '@angular/core';
 })
 export class HeroSectionComponent implements OnInit, OnDestroy {
 
+  @Input()
   images = [
     "/banner/banner-01.jpeg",
     "/banner/banner-02.jpg"
