@@ -17,6 +17,10 @@ export class DashboardComponent {
     window.location.href = "/login";
   }
 
+  adminDashboardHome(){
+    this.router.navigateByUrl('/admin');
+  }
+
   adminOrders(){
     this.router.navigateByUrl('/admin/orders');
   }

@@ -3,6 +3,7 @@ import {ProductCardComponent} from '../../homepage/product-card/product-card.com
 import {NgForOf} from '@angular/common';
 import {CollectionCardData} from '../../../products.interface';
 import {Router} from '@angular/router';
+import { CollectionsApiService } from '../../services/collections-api.service';
 
 @Component({
   selector: 'app-collections-main-content',
@@ -16,16 +17,25 @@ import {Router} from '@angular/router';
 export class CollectionsMainContentComponent implements OnInit{
   collectionCardsList : CollectionCardData[] = [];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private collectionsApiService: CollectionsApiService,
+  ) {
   }
 
   ngOnInit(){
-    this.collectionCardsList = [
-      {title: "Gift Sets", imageUrl: "/collection/collection-01.jpg", url:"gift-sets"},
-      {title: "Premium Candles", imageUrl: "/collection/collection-02.jpg", url: "premium-candles"},
-      {title: "Waterproof Candles", imageUrl: "/collection/collection-03.jpg", url: "waterproof-candles"},
-      {title: "Waterproof Candles", imageUrl: "/collection/collection-03.jpg", url: "waterproof-candles"},
-    ]
+    this.getCollectionsData();
+  }
+
+  getCollectionsData(){
+    this.collectionsApiService.getAllCollections().subscribe({
+      next: (data) => {
+        this.collectionCardsList = data as CollectionCardData[];
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
   }
 
   navigateToCollectionDetails(url: string){

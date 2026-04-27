@@ -9,9 +9,11 @@ export interface ProductCardData{
 }
 
 export interface CollectionCardData{
+  collectionId: number;
   title: string;
   imageUrl: string;
   url: string;
+  productsList: number[];
 }
 
 export interface ProductDetails{
@@ -20,8 +22,9 @@ export interface ProductDetails{
   imageUrl:  string[];
   description: string;
   discountedPrice: number;
-  originalPrice: number;
-  similarProductIds: number[];
+  originalPrice?: number;
+  similarProductIds?: number[];
+  quantityAvailable?: number;
 }
 
 export interface CollectionList{
