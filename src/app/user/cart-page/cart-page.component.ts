@@ -118,6 +118,10 @@ export class CartPageComponent implements OnInit {
   checkoutPage() {
     this.router.navigateByUrl('/checkout');
   }
+
+  redirectToTrackOrderPage(){
+    this.router.navigateByUrl('/track-order');
+  }
 }
 
 export interface CartProduct {

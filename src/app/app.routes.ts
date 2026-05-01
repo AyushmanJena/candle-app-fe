@@ -13,6 +13,7 @@ import {
   CollectionsMainContentComponent
 } from './user/collections/collections-main-content/collections-main-content.component';
 import {CollectionDetailComponent} from './user/collections/collection-detail/collection-detail.component';
+import { TrackOrderComponent } from './user/cart-page/track-order/track-order.component';
 
 export const routes: Routes = [
 
@@ -20,7 +21,9 @@ export const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'cart', component: CartPageComponent},
   {path: 'listing-page', component: ListingPageComponent},
+  {path: 'track-order', component: TrackOrderComponent},
   {path: 'product/:id', component: ProductPageComponent},
+
 
   {
     path: 'collections',
