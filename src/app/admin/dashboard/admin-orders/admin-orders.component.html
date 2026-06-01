@@ -17,24 +17,19 @@
         <td mat-cell *matCellDef="let order"> {{order.customerName}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="customerPhone">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by price"> Phone Number </th>
-        <td mat-cell *matCellDef="let order"> {{order.customerPhone}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="customerPinCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by stock"> Pin Code </th>
-        <td mat-cell *matCellDef="let order"> {{order.customerPinCode}} </td>
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by phoneNumber"> Phone Number </th>
+        <td mat-cell *matCellDef="let order"> {{order.phoneNumber}} </td>
       </ng-container>
 
       <ng-container matColumnDef="orderAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by isShown"> Total Amount </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by orderAmount"> Total Amount </th>
         <td mat-cell *matCellDef="let order"> {{order.orderAmount}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="orderItems">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by isShown"> No. of Items </th>
-        <td mat-cell *matCellDef="let order"> {{order.orderItems}} </td>
+      <ng-container matColumnDef="orderItemsCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by orderItemsCount"> Items Count </th>
+        <td mat-cell *matCellDef="let order"> {{order.orderItemsCount}} </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
@@ -52,11 +47,13 @@
               View
             </button>
 
-            <select id="difficultyLevel" name="difficultyLevel" (change)="changeOrderStatus(order.orderId)" [(ngModel)]="order.orderStatus" class="px-2 py-1 text-sm rounded border-2 cursor-pointer">
-              <option value="placed">PLACED</option>
-              <option value="accepted">ACCEPTED</option>
-              <option value="shipped">SHIPPED</option>
-              <option value="delivered">DELIVERED</option>
+            <select id="difficultyLevel" name="difficultyLevel" (change)="changeOrderStatus(order.orderId, order.orderStatus)" [(ngModel)]="order.orderStatus" class="px-2 py-1 text-sm rounded border-2 cursor-pointer">
+              <option value="PLACED">PLACED</option>
+              <option value="PENDING">PENDING</option>
+              <option value="ACCEPTED">ACCEPTED</option>
+              <option value="SHIPPED">SHIPPED</option>
+              <option value="DELIVERED">DELIVERED</option>
+              <option value="CANCELLED">CANCELLED</option>
             </select>
           </div>
         </td>
@@ -91,8 +88,27 @@
         </div>
 
 
-        <div>
-          order details would be displayed here
+        <div class="w-full flex flex-col gap-2">
+          <p><b>Order Id : </b>{{selectedViewDetailsOrder.orderId}}</p>
+          <p><b>Customer Name : </b>{{selectedViewDetailsOrder.customerName}}</p>
+          <p><b>Order Status : </b>{{selectedViewDetailsOrder.orderStatus}}</p>
+          <p><b>Sub Total : </b>{{selectedViewDetailsOrder.subTotal}}</p>
+          <p><b>Delivery Charges : </b>{{selectedViewDetailsOrder.deliveryCharge}}</p>
+          <p><b>Grand Total : </b>{{selectedViewDetailsOrder.grandTotal}}</p>
+          <div class="flex flex-row"><p><b>Coupon Applied : </b></p> <p *ngIf="selectedViewDetailsOrder.couponAmount">YES</p><p *ngIf="!selectedViewDetailsOrder.couponAmount">NO</p></div>
+          <div *ngIf="selectedViewDetailsOrder.couponAmount">
+            <p>Coupon Code : {{selectedViewDetailsOrder.couponCode}}</p>
+            <p>Coupon Discount Amount : {{selectedViewDetailsOrder.couponAmount}}</p>
+          </div>
+
+          <p><b>Delivery Address : </b>{{selectedViewDetailsOrder.deliveryAddress}}</p>
+          <p><b>Phone Number : </b>{{selectedViewDetailsOrder.phoneNumber}}</p>
+          <p><b>Email Address : </b>{{selectedViewDetailsOrder.emailAddress}}</p>
+          <p><b>Number of Items : </b>{{selectedViewDetailsOrder.items.length}}</p>
+
+          <div *ngFor="let item of selectedViewDetailsOrder.items">
+            <p>{{item.itemId}} - ProductId: {{item.productId}}, Quantity: {{item.quantity}}</p>
+          </div>
         </div>
       </div>
 

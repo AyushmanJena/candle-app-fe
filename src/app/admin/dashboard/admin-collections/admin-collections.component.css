@@ -1,3 +1,12 @@
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+
 input{
   border-radius: 6px;
   border: solid 1px;
@@ -10,10 +19,4 @@ input{
   background-color: #3bc4ff;
   padding: 8px 32px;
   border-radius: 6px;
-  color: white;
-}
-
-.save-button:hover{
-  background-color: #31a9d1;
-  cursor: pointer;
 }

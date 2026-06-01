@@ -6,7 +6,7 @@
       <div class="relative aspect-[4/3] w-[480px] flex-shrink-0 group">
 
         <!-- IMAGE -->
-        <img [src]="images[currentImageIndex]" alt="Product Image"
+        <img *ngIf="images?.length" [src]="images[currentImageIndex]" alt="Product Image"
           class="w-full h-full object-cover rounded-lg transition-opacity duration-300" />
 
         <!-- PREV BUTTON -->

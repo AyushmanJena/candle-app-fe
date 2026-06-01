@@ -5,56 +5,55 @@
 
     <div class=" w-full h-14 flex flex-row justify-between items-center px-4 py-4">
       <h1 class="text-xl font-semibold tracking-wide">Product Management</h1>
-      <button
-          class="px-2 py-2 text-sm rounded bg-blue-400 hover:bg-blue-500 text-white cursor-pointer" (click)="displayEditDialog()">
-          ADD NEW PRODUCT
-        </button>
+      <button class="px-2 py-2 text-sm rounded bg-blue-400 hover:bg-blue-500 text-white cursor-pointer"
+        (click)="displayCreateDialog()">
+        ADD NEW PRODUCT
+      </button>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)="announceSortChange($event)">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort
+      (matSortChange)="announceSortChange($event)">
 
       <ng-container matColumnDef="productId">
-        <th mat-header-cell *matHeaderCellDef class="w-[140px] max-w-[140px]" mat-sort-header sortActionDescription="Sort by id"> Product Id </th>
+        <th mat-header-cell *matHeaderCellDef class="w-[140px] max-w-[140px]" mat-sort-header
+          sortActionDescription="Sort by id"> Product Id </th>
         <td mat-cell *matCellDef="let product" class="w-[140px] max-w-[140px]"> {{product.productId}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="productTitle">
+      <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by title"> Title </th>
-        <td mat-cell *matCellDef="let product"> {{product.productTitle}} </td>
+        <td mat-cell *matCellDef="let product"> {{product.title}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="finalPrice">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by price"> Final Price </th>
-        <td mat-cell *matCellDef="let product"> {{product.finalPrice}} </td>
+      <ng-container matColumnDef="discountedPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by discountedPrice"> Final
+          Price </th>
+        <td mat-cell *matCellDef="let product"> {{product.discountedPrice}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="stock">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by stock"> Stock </th>
-        <td mat-cell *matCellDef="let product"> {{product.stock}} </td>
+      <ng-container matColumnDef="inStock">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by inStock"> Available </th>
+        <td mat-cell *matCellDef="let product"> {{product.inStock}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="isShown">
+      <!-- <ng-container matColumnDef="isShown">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by isShown"> Shown </th>
         <td mat-cell *matCellDef="let product"> {{product.isShown ? "SHOWN" : "HIDDEN"}} </td>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef
-            class="w-[140px] max-w-[140px] text-center whitespace-nowrap">
+        <th mat-header-cell *matHeaderCellDef class="w-[140px] max-w-[140px] text-center whitespace-nowrap">
           Actions
         </th>
 
-        <td mat-cell *matCellDef="let product"
-            class="w-[140px] max-w-[140px] px-2 whitespace-nowrap">
+        <td mat-cell *matCellDef="let product" class="w-[140px] max-w-[140px] px-2 whitespace-nowrap">
           <div class="flex items-center justify-center gap-2">
-            <button
-              class="px-2 py-1 text-sm rounded bg-yellow-400 hover:bg-yellow-500 w-18  cursor-pointer"
+            <button class="px-2 py-1 text-sm rounded bg-yellow-400 hover:bg-yellow-500 w-18  cursor-pointer"
               (click)="displayEditDialog(product.productId)">
               Edit
             </button>
 
-            <button
-              class="px-2 py-1 text-sm rounded bg-red-400 hover:bg-red-500 w-18  cursor-pointer">
+            <button class="px-2 py-1 text-sm rounded bg-red-400 hover:bg-red-500 w-18  cursor-pointer">
               {{ product.isShown ? 'Hide' : 'Show' }}
             </button>
           </div>
@@ -65,9 +64,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                   showFirstLastButtons
-                   aria-label="Select page of periodic elements">
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
 
   </div>
@@ -83,101 +80,117 @@
 
 <!--(click)="onEditDialogClose()"-->
 
-<div class="dialog-overlay"  *ngIf="editDialogShown">
+<div class="dialog-overlay" *ngIf="editDialogShown">
   <mat-card appearance="outlined" class="w-[40%]">
     <mat-card-content>
 
       <div class="flex flex-col gap-2 justify-center items-center">
         <div class="flex flex-row items-center justify-between w-full">
-          <h1 class="text-2xl font-medium">EDIT PRODUCT DETAILS</h1>
+          <h1 class="text-2xl font-medium">
+            {{ dialogMode === 'create' ? 'ADD NEW PRODUCT' : 'EDIT PRODUCT DETAILS' }}
+          </h1>
           <div
             class="bg-gray-500 text-white h-8 w-18 flex flex-row justify-center items-center rounded-md cursor-pointer"
-            (click)="onEditDialogClose()"
-          >X</div>
+            (click)="onEditDialogClose()">X</div>
         </div>
         <div class=" p-4 w-[75%]">
           <form [formGroup]="editForm" class="flex flex-col gap-4">
 
-            <div class="flex flex-row justify-between items-center">
+            <div class="flex flex-row justify-between items-center" *ngIf="dialogMode === 'edit'">
               <label for="productId" class="font-medium">Product Id</label>
-              <input
-                id="productId"
-                type="text"
-                formControlName="productId"
-                class="form-control"
-                readonly>
+              <input id="productId" type="text" formControlName="productId" class="form-control" readonly>
             </div>
 
             <div class="flex flex-row justify-between items-center">
               <label for="title">Title<span class="text-red-600">*</span></label>
               <div class="flex flex-col">
-                <input
-                  type="text"
-                  id="title"
-                  formControlName="title"
-                  class="form-control">
-                <small *ngIf=" this.editForm.get('title')?.invalid && (editForm.get('title')?.touched || editForm.get('title')?.dirty)"
-                    class="text-red-600"
-                >Title is Required</small>
+                <input type="text" id="title" formControlName="title" class="form-control">
+                <small
+                  *ngIf=" this.editForm.get('title')?.invalid && (editForm.get('title')?.touched || editForm.get('title')?.dirty)"
+                  class="text-red-600">Title is Required</small>
               </div>
             </div>
 
             <div class="flex flex-row justify-between items-center">
               <label for="originalPrice">Original Price</label>
               <div class="flex flex-col">
-                <input
-                  type="number"
-                  id="originalPrice"
-                  formControlName="originalPrice"
-                  class="form-control">
+                <input type="number" id="originalPrice" formControlName="originalPrice" class="form-control">
               </div>
             </div>
 
             <div class="flex flex-row justify-between items-center">
-              <label for="finalPrice">Final Price<span class="text-red-600">*</span></label>
+              <label for="discountedPrice">Final Price<span class="text-red-600">*</span></label>
               <div class="flex flex-col">
-                <input
-                  type="number"
-                  id="finalPrice"
-                  formControlName="finalPrice"
-                  class="form-control">
-                <small *ngIf=" this.editForm.get('finalPrice')?.invalid && (editForm.get('finalPrice')?.touched || editForm.get('finalPrice')?.dirty)"
-                       class="text-red-600"
-                >Final Price is Required</small>
+                <input type="number" id="discountedPrice" formControlName="discountedPrice" class="form-control">
+                <small
+                  *ngIf=" this.editForm.get('discountedPrice')?.invalid && (editForm.get('discountedPrice')?.touched || editForm.get('discountedPrice')?.dirty)"
+                  class="text-red-600">Final Price is Required</small>
               </div>
             </div>
 
             <div class="flex flex-row justify-between items-center">
-              <label for="stock">Edit Quantity<span class="text-red-600">*</span></label>
+              <label for="quantityAvailable">Edit Quantity<span class="text-red-600">*</span></label>
               <div class="flex flex-col">
-                <input
-                  type="number"
-                  id="stock"
-                  formControlName="stock"
-                  class="form-control">
-                <small *ngIf=" this.editForm.get('stock')?.invalid && (editForm.get('stock')?.touched || editForm.get('stock')?.dirty)"
-                       class="text-red-600"
-                >Quantity is Required</small>
+                <input type="number" id="quantityAvailable" formControlName="quantityAvailable" class="form-control">
+                <small
+                  *ngIf=" this.editForm.get('quantityAvailable')?.invalid && (editForm.get('quantityAvailable')?.touched || editForm.get('quantityAvailable')?.dirty)"
+                  class="text-red-600">Quantity is Required</small>
               </div>
             </div>
 
             <div class="flex flex-row justify-between items-center">
               <label for="description">Description</label>
               <div class="flex flex-col">
-                <input
-                  type="text"
-                  id="description"
-                  formControlName="description"
-                  class="form-control">
+                <input type="text" id="description" formControlName="description" class="form-control">
+              </div>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <label for="similarProductIds">Similar Products</label>
+              <mat-form-field appearance="outline" class="w-[180px]">
+                <mat-label>Select Products</mat-label>
+                <mat-select id="similarProductIds" formControlName="similarProductIds" multiple>
+                  <mat-option *ngFor="let product of productsList" [value]="product.productId">
+                    {{ product.title }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="flex flex-row justify-between items-start">
+              <label class="mt-2">Image URLs</label>
+              <div class="flex flex-col gap-2 w-[180px]">
+
+                <div *ngFor="let group of imageUrlsArray.controls; let i = index"
+                  class="flex flex-row gap-1 items-center" [formGroup]="$any(group)">
+                  <div class="flex flex-col">
+                    <input type="url" formControlName="imageUrl" placeholder="https://..." class="form-control">
+                    <small
+                      *ngIf="group.get('imageUrl')?.invalid && (group.get('imageUrl')?.touched || group.get('imageUrl')?.dirty)"
+                      class="text-red-600">
+                      Enter a valid URL
+                    </small>
+                  </div>
+                  <button type="button" (click)="removeImageUrlField(i)" [disabled]="imageUrlsArray.length === 1"
+                    class="text-red-500 font-bold disabled:opacity-30 px-1">
+                    ✕
+                  </button>
+                </div>
+
+                <button type="button" (click)="addImageUrlField()"
+                  class="text-sm text-blue-600 hover:underline self-start">
+                  + Add URL
+                </button>
+
               </div>
             </div>
 
           </form>
         </div>
 
-        <div class=" flex flex-col justify-center items-center">
-          <button class="save-button " (click)="saveProductData()" >SAVE</button>
-        </div>
+        <button class="save-button" (click)="saveProductData()">
+          {{ dialogMode === 'create' ? 'CREATE' : 'SAVE' }}
+        </button>
 
       </div>
     </mat-card-content>

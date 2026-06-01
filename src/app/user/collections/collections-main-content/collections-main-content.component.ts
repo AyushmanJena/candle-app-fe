@@ -38,7 +38,7 @@ export class CollectionsMainContentComponent implements OnInit{
     })
   }
 
-  navigateToCollectionDetails(url: string){
-    this.router.navigate(['collections/'+url]);
+  navigateToCollectionDetails(id: number){
+    this.router.navigate(['collections/'+id]);
   }
 }

@@ -1,14 +1,85 @@
-<div class="w-full flex flex-col items-center py-10 bg-red-400">
-    <div>
-        cards and low on stock table
-        <div>
-            cards container
+<div class="w-full flex flex-col items-center py-10">
+  <mat-card appearance="outlined" class="w-[70%]">
+    <mat-card-content>
+
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <div class="flex flex-row items-center justify-between w-full">
+          <h1 class="text-2xl font-medium">EDIT HOMEPAGE DATA</h1>
         </div>
-        <div>
-            low on stock table
+        <div class=" p-4 w-[75%]">
+          <form [formGroup]="addForm" class="flex flex-col gap-4">
+
+            <!-- Banner Image URLs (FormArray) -->
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-row justify-between items-center">
+                <label class="font-medium">Banner Image URLs</label>
+                <button class="px-2 py-2 text-sm rounded hover:bg-gray-300  cursor-pointer"
+                  (click)="addBannerUrl()">
+                  ADD URL
+                </button>
+              </div>
+              <div *ngFor="let ctrl of bannerImageUrlsArray.controls; let i = index"
+                class="flex flex-row items-center gap-2">
+                <input type="text" [formControl]="asFormControl(ctrl)" placeholder="https://..."
+                  class="form-control flex-1" />
+                <button type="button" (click)="removeBannerUrl(i)"
+                  [disabled]="bannerImageUrlsArray.length === 1">−</button>
+              </div>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <label for="bestSellers">Showcase Products</label>
+              <mat-form-field appearance="outline" class="w-[400px]">
+                <mat-label>Select Products</mat-label>
+                <mat-select id="bestSellers" formControlName="bestSellers" multiple>
+                  <mat-option *ngFor="let product of allProductsList" [value]="product.productId">
+                    {{ product.title }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <label for="featuredCollections">Featured Collections</label>
+              <mat-form-field appearance="outline" class="w-[400px]">
+                <mat-label>Select Collections</mat-label>
+                <mat-select id="featuredCollections" formControlName="featuredCollections" multiple>
+                  <mat-option *ngFor="let collection of allCollectionsList" [value]="collection.collectionId">
+                    {{ collection.title }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <!-- Reviews (FormArray) -->
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-row justify-between items-center">
+                <label class="font-medium">Reviews</label>
+                <button class="px-2 py-2 text-sm rounded hover:bg-gray-300  cursor-pointer"
+                  (click)="addReview()">
+                  ADD REVIEW
+                </button>
+              </div>
+              <div *ngFor="let ctrl of reviewsArray.controls; let i = index" class="flex flex-row items-center gap-2">
+                <textarea [formControl]="asFormControl(ctrl)" placeholder="Customer review..." rows="2"
+                  class="form-control flex-1"></textarea>
+                <button type="button" (click)="removeReview(i)" [disabled]="reviewsArray.length === 1">−</button>
+              </div>
+            </div>
+
+          </form>
         </div>
-    </div>
-    <div>
-        revenue graph
-    </div>
+
+        <div class=" flex flex-col justify-center items-center">
+          <button class="save-button " (click)="saveHomepageData()">SAVE</button>
+        </div>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
+
+<!-- 
+<div class="dialog-overlay" *ngIf="editDialogShown">
+  
+</div> -->

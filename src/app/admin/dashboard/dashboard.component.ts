@@ -13,9 +13,11 @@ export class DashboardComponent {
   constructor(private auth: AuthService,private router: Router) {}
 
   logout() {
-    this.auth.logout();
-    window.location.href = "/login";
-  }
+
+  this.auth.logout().subscribe(() => {
+    this.router.navigate(['/login']);
+  });
+}
 
   adminDashboardHome(){
     this.router.navigateByUrl('/admin');
@@ -31,5 +33,9 @@ export class DashboardComponent {
 
   adminProducts(){
     this.router.navigateByUrl('/admin/products');
+  }
+
+  adminCollections(){
+    this.router.navigateByUrl('/admin/collections');
   }
 }

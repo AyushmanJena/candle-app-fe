@@ -34,7 +34,7 @@ export const routes: Routes = [
         component: CollectionsMainContentComponent
       },
       {
-        path: ':collectionTitle',
+        path: ':collectionId',
         component: CollectionDetailComponent
       }
     ]

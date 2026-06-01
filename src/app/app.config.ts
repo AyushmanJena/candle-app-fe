@@ -2,7 +2,8 @@ import { ApplicationConfig } from '@angular/core';
 import {provideRouter, withInMemoryScrolling} from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { TokenInterceptor } from './auth/token.interceptor';
+import { authInterceptor } from './auth/auth.interceptor';
+// import { TokenInterceptor } from './auth/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +15,7 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideHttpClient(
-      withInterceptors([TokenInterceptor])
+      withInterceptors([authInterceptor])
     )
   ]
 };
