@@ -1,0 +1,128 @@
+<div class="w-full min-h-screen flex flex-col items-center py-10">
+  <div class="w-[75%] rounded-lg border-1  overflow-hidden">
+
+    <div class=" w-full h-14 flex flex-row justify-between items-center px-4 py-4">
+      <h1 class="text-xl font-semibold tracking-wide">Collection Management</h1>
+      <button
+          class="px-2 py-2 text-sm rounded bg-blue-400 hover:bg-blue-500 text-white cursor-pointer" (click)="displayAddDialog()">
+          ADD NEW COLLECTION
+        </button>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="collectionId">
+        <th mat-header-cell *matHeaderCellDef class="w-[140px] max-w-[140px]"> Collection Id </th>
+        <td mat-cell *matCellDef="let collection" class="w-[140px] max-w-[140px]"> {{collection.collectionId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let collection"> {{collection.title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="productsList">
+        <th mat-header-cell *matHeaderCellDef> Products </th>
+        <td mat-cell *matCellDef="let collection"> {{collection.productsList}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="w-[140px] max-w-[140px] text-center whitespace-nowrap">
+          Actions
+        </th>
+
+        <td mat-cell *matCellDef="let collection" class="w-[140px] max-w-[140px] px-2 whitespace-nowrap">
+          <div class="flex items-center justify-center gap-2">
+            <button class="px-2 py-1 text-sm rounded bg-yellow-400 hover:bg-yellow-500 w-18  cursor-pointer"
+              (click)="displayEditDialog(collection.collectionId)">
+              Edit
+            </button>
+
+            <!-- <button class="px-2 py-1 text-sm rounded bg-red-400 hover:bg-red-500 w-18  cursor-pointer">
+              {{ product.isShown ? 'Hide' : 'Show' }} // modify to isShown or something similar
+            </button> -->
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>
+
+
+<div class="dialog-overlay"  *ngIf="addDialogShown">
+  <mat-card appearance="outlined" class="w-[40%]">
+    <mat-card-content>
+
+      <div class="flex flex-col gap-2 justify-center items-center">
+        <div class="flex flex-row items-center justify-between w-full">
+          <h1 class="text-2xl font-medium">
+            {{ dialogMode === 'create' ? 'ADD NEW COLLECTION' : 'EDIT COLLECTION DETAILS' }}
+          </h1>
+          <div
+            class="bg-gray-500 text-white h-8 w-18 flex flex-row justify-center items-center rounded-md cursor-pointer"
+            (click)="onAddDialogClose()"
+          >X</div>
+        </div>
+        <div class=" p-4 w-[75%]">
+          <form [formGroup]="addForm" class="flex flex-col gap-4">
+
+            <div class="flex flex-row justify-between items-center" *ngIf="dialogMode === 'edit'">
+              <label for="collectionId" class="font-medium">Collection Id</label>
+              <input id="collectionId" type="text" formControlName="collectionId" class="form-control" readonly>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <label for="title">Title<span class="text-red-600">*</span></label>
+              <div class="flex flex-col">
+                <input
+                  type="text"
+                  id="title"
+                  formControlName="title"
+                  class="form-control">
+                <small *ngIf=" this.addForm.get('title')?.invalid && (addForm.get('title')?.touched || addForm.get('title')?.dirty)"
+                    class="text-red-600"
+                >Collection Title is Required</small>
+              </div>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <label for="imageUrl">Image Url<span class="text-red-600">*</span></label>
+              <div class="flex flex-col">
+                <input
+                  type="url"
+                  id="imageUrl"
+                  formControlName="imageUrl"
+                  class="form-control">
+                <small *ngIf=" this.addForm.get('imageUrl')?.invalid && (addForm.get('imageUrl')?.touched || addForm.get('imageUrl')?.dirty)"
+                    class="text-red-600"
+                >Image Url is Required</small>
+              </div>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+              <label for="similarProductIds">Similar Products</label>
+              <mat-form-field appearance="outline" class="w-[180px]">
+                <mat-label>Select Products</mat-label>
+                <mat-select id="similarProductIds" formControlName="productsList" multiple>
+                  <mat-option *ngFor="let product of allProductsList" [value]="product.productId">
+                    {{ product.title }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </form>
+        </div>
+
+        <div class=" flex flex-col justify-center items-center">
+          <button class="save-button " (click)="saveCollectionData()" >SAVE</button>
+        </div>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

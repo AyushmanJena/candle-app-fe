@@ -4,6 +4,7 @@ import {AdminProductsComponent} from './admin-products/admin-products.component'
 import {AdminOrdersComponent} from './admin-orders/admin-orders.component';
 import {AdminCouponsComponent} from './admin-coupons/admin-coupons.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminCollectionsComponent } from './admin-collections/admin-collections.component';
 
 
 export const ADMIN_ROUTES: Routes = [
@@ -14,7 +15,8 @@ export const ADMIN_ROUTES: Routes = [
       { path: '', component: AdminDashboardComponent },
       { path: 'products', component: AdminProductsComponent },
       { path: 'coupons', component: AdminCouponsComponent },
-      { path: 'orders', component: AdminOrdersComponent }
+      { path: 'orders', component: AdminOrdersComponent },
+      { path: 'collections', component: AdminCollectionsComponent },
     ]
   }
 ];

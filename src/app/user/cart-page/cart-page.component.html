@@ -1,8 +1,12 @@
 <div class=" flex flex-col items-center max-w-[900px] mx-auto min-h-screen">
   <div class="flex flex-row justify-between items-center w-full mt-20 mb-8">
     <h2 class="text-3xl">Place Order</h2>
-    <div class="bg-white text-sm px-6 py-1 border
+    <div class="flex flex-row gap-4 items-center">
+      <div class="underline cursor-pointer" (click)="redirectToTrackOrderPage()">Track Previous Order</div>
+      <div class="bg-white text-sm px-6 py-1 border
         hover:bg-black hover:text-white rounded-md transition cursor-pointer" (click)="clearCart()" *ngIf="cartProducts.length > 0">Clear Cart</div>
+    </div>
+    
   </div>
 
 <!--  cart cards-->
@@ -16,6 +20,7 @@
         hover:bg-white hover:text-black hover:border-black transition cursor-pointer" (click)="redirectToProductsPage()">
       EXPLORE PRODUCTS
     </button>
+    <div class="underline cursor-pointer" (click)="redirectToTrackOrderPage()">Track Previous Order</div>
   </div>
   <div class="w-full h-px bg-gray-700 my-4"></div>
 

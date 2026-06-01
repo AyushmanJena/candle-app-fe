@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductsApiService } from '../services/products-api.service';
 import { forkJoin } from 'rxjs';
 import {CartService} from '../../shared/services/cart-service.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-page',
@@ -27,21 +28,24 @@ export class ProductPageComponent implements OnInit {
   // image carousel
   currentImageIndex = 0;
 
-  images!: string[];
+  images: string[] = [];
+  productId!: number;
 
   constructor(
+    private route: ActivatedRoute,
     private http: HttpClient,
     private productApiService: ProductsApiService,
     private cartService: CartService,
   ) { }
 
   ngOnInit() {
+    this.productId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadProductDetails();
   }
 
   loadProductDetails() {
     // make api call to fetch product details by Id
-    this.productApiService.getProductDetailsById(1).subscribe({
+    this.productApiService.getProductDetailsById(this.productId).subscribe({
       next: (data) => {
         this.product = data;
         this.loadProductImages();
@@ -55,7 +59,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   loadProductImages() {
-    this.images = this.product.imageUrl;
+    this.images = this.product.imageUrl.map(
+      image => image.imageUrl
+    );
   }
 
   loadSimilarProducts() {

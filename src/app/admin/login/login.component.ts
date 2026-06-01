@@ -13,19 +13,33 @@ import {AuthService} from "../../auth/auth.service";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  email = "";
-  password = "";
-  errorMsg = "";
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ){}
 
-  constructor(private auth: AuthService, private router: Router) {}
+  username = '';
+  password = '';
+  errorMessage = '';
 
-  login() {
-    this.auth.login(this.email, this.password).subscribe({
-      next: res => {
-        this.auth.saveToken(res.token);
+  login(){
+    this.errorMessage = '';
+    this.authService.login({
+      username: this.username,
+      password: this.password
+    }).subscribe({
+      next: () => {
         this.router.navigate(['/admin']);
       },
-      error: () => this.errorMsg = "Invalid email or password"
+
+      error: () => {
+        this.errorMessage = 'Invalid username or password';
+      }
     });
   }
+}
+
+export interface LoginRequest{
+  username: string;
+  password: string;
 }

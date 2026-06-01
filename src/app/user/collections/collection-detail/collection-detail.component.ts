@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import {ProductCardData} from '../../../products.interface';
+import { Component, OnInit } from '@angular/core';
+import {CollectionCardData, ProductCardData} from '../../../products.interface';
 import {NgForOf} from '@angular/common';
 import {ProductCardComponent} from '../../homepage/product-card/product-card.component';
+import { ActivatedRoute } from '@angular/router';
+import { CollectionsApiService } from '../../services/collections-api.service';
+import { ProductsApiService } from '../../services/products-api.service';
 
 @Component({
   selector: 'app-collection-detail',
@@ -12,90 +15,46 @@ import {ProductCardComponent} from '../../homepage/product-card/product-card.com
   templateUrl: './collection-detail.component.html',
   styleUrl: './collection-detail.component.css'
 })
-export class CollectionDetailComponent {
-  bestSellersList: ProductCardData[] = [
-    {
-      productId:1,
-      title: "Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 120,
-        inStock: true
-    },
-    {
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    },
-    {
-      productId:3,
-      title: "Third Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 120,
-        inStock: true
-    },
-    {
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    },
-    {
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    },
-    {
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    },{
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    },{
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    },{
-      productId:2,
-      title: "Second Premium Scented Heart Shaped Candles with midnight autumn fragrance",
-      imageUrl: "https://i.pinimg.com/736x/f6/65/4d/f6654d653d8dabb78eacec645892b838.jpg",
-      description: "hello this is test description",
-      discountedPrice: 99,
-      originalPrice: 99,
-        inStock: true
-    }
+export class CollectionDetailComponent implements OnInit{
+  collectionProducts: ProductCardData[] = [  ]
 
+  constructor(
+    private route: ActivatedRoute,
+    private collectionApiService: CollectionsApiService,
+    private productApiService: ProductsApiService,
+  ){}
 
+  collectionCardData!: CollectionCardData;
 
+  ngOnInit(){
+    const collectionId = Number(this.route.snapshot.paramMap.get('collectionId'));
 
+    this.getCollectionData(collectionId);
+  }
 
-  ]
+  getCollectionData(collectionId: number){
+    this.collectionApiService.getCollectionById(collectionId).subscribe({
+      next: (data) => {
+        this.collectionCardData = data as CollectionCardData;
+        this.fetchCollectionProducts();
+      },
+      error : (error) => {
+        console.error(error);
+      }
+    });
+  }
+
+  fetchCollectionProducts(){
+    this.collectionCardData.productsList.forEach(productId => {
+      this.productApiService.getProductById(productId).subscribe({
+        next: (data) => {
+          this.collectionProducts.push(data as ProductCardData);
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    });
+  }
+
 }

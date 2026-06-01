@@ -9,7 +9,7 @@
         </button>
     </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
       <ng-container matColumnDef="couponId">
         <th mat-header-cell *matHeaderCellDef class="w-[140px] max-w-[140px]"> Coupon Id </th>
@@ -40,9 +40,13 @@
         <td mat-cell *matCellDef="let coupon"
             class="w-[140px] max-w-[140px] px-2 whitespace-nowrap">
           <div class="flex items-center justify-center gap-2">
-            <button
-              class="px-2 py-1 text-sm rounded bg-red-400 hover:bg-red-500 w-18 cursor-pointer">
-              {{ coupon.isShown ? 'Hide' : 'Show' }}
+            <button *ngIf="coupon.activeStatus"
+              class="px-2 py-1 text-sm rounded bg-red-400 hover:bg-red-500 w-24 cursor-pointer" (click)="changeCouponStatus(coupon.couponId)">
+              Activate
+            </button>
+            <button *ngIf="!coupon.activeStatus"
+              class="px-2 py-1 text-sm rounded bg-green-400 hover:bg-green-500 w-24 cursor-pointer" (click)="changeCouponStatus(coupon.couponId)">
+              Deactivate
             </button>
 
 <!--            <button-->
@@ -92,14 +96,14 @@
             </div>
 
             <div class="flex flex-row justify-between items-center">
-              <label for="discount">Discount Percentage<span class="text-red-600">*</span></label>
+              <label for="discountPercentage">Discount Percentage<span class="text-red-600">*</span></label>
               <div class="flex flex-col">
                 <input
                   type="number"
-                  id="discount"
-                  formControlName="discount"
+                  id="discountPercentage"
+                  formControlName="discountPercentage"
                   class="form-control">
-                <small *ngIf=" this.addForm.get('discount')?.invalid && (addForm.get('discount')?.touched || addForm.get('discount')?.dirty)"
+                <small *ngIf=" this.addForm.get('discountPercentage')?.invalid && (addForm.get('discountPercentage')?.touched || addForm.get('discountPercentage')?.dirty)"
                     class="text-red-600"
                 >Discount is Required</small>
               </div>

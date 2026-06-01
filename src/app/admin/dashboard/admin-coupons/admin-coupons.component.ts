@@ -11,6 +11,9 @@ import {
 } from '@angular/material/table';
 import { MatCardModule } from "@angular/material/card";
 import { CommonModule } from '@angular/common';
+import { CouponsList } from '../../interfaces/coupons.interface';
+import { CouponsManagementService } from '../../services/coupons-management.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-admin-coupons',
@@ -25,6 +28,7 @@ import { CommonModule } from '@angular/common';
     MatRow,
     MatRowDef,
     MatTable,
+    MatSort,
     MatHeaderCellDef,
     MatCardModule,
     CommonModule
@@ -34,28 +38,51 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminCouponsComponent implements OnInit {
   displayedColumns: string[] = ['couponId', 'couponCode', 'discountPercentage', 'minimumPurchase', 'actions'];
-  ordersLists: CouponsList[] = [
-    {couponId:1, couponCode: "VULCAN24", discountPercentage:24, minimumPurchase:500, activeStatus:true },
-    {couponId:2, couponCode: "AYUSH12", discountPercentage:12, activeStatus:false },
-    {couponId:3, couponCode: "SUMEEN22", discountPercentage:22, minimumPurchase: 1000, activeStatus:true },
-  ];
 
-  dataSource = new MatTableDataSource(this.ordersLists);
+  dataSource = new MatTableDataSource<CouponsList>([]);
 
    addForm!: FormGroup;
    addDialogShown: boolean = false;
 
+   @ViewChild(MatSort) sort! : MatSort;
+
+   constructor(
+    private couponsManagementService: CouponsManagementService,
+   ){}
+
   ngOnInit(){
     this.addForm = new FormGroup({
       'couponCode': new FormControl(null, Validators.required),
-      'discount': new FormControl(null, Validators.required),
+      'discountPercentage': new FormControl(null, Validators.required),
       'minimumPurchase': new FormControl(null),
     });
+
+    this.fetchCouponsList();
   }
 
-  changeCouponStatus(couponCode: number){
-    // make api call to change the order status
-    // set the order status of the order to the selected option
+  ngAfterViewInit(){
+    this.dataSource.sort = this.sort;
+    this.sort.sort({ id: 'couponId', start: 'asc', disableClear: false });  // default sort
+  }
+
+  fetchCouponsList(){
+    this.couponsManagementService.getAllCoupons().subscribe({
+      next: (data) => {
+        this.dataSource.data = data;
+        this.dataSource.sort = this.sort;
+      },
+      error : (error) => {
+        console.error("Error fetching coupons list", error);
+      }
+    })
+  }
+
+  changeCouponStatus(couponId: number){
+    this.couponsManagementService.changeCouponStatus(couponId).subscribe({
+      next: (data) =>{
+        this.fetchCouponsList();
+      }
+    });
   }
 
   deleteCoupon(couponId: number){
@@ -74,15 +101,18 @@ export class AdminCouponsComponent implements OnInit {
 
 
   saveCouponData(){
+    if(this.addForm.invalid) return;
 
+    this.couponsManagementService.createCoupon(this.addForm.value).subscribe({
+      next: ()=> {
+        this.fetchCouponsList();
+        this.onAddDialogClose();
+      },
+      error : (error) => {
+        console.error("Error creating coupon", error);
+      }
+    })
   }
 }
 
 
-export interface CouponsList{
-  couponId: number;
-  couponCode: string;
-  discountPercentage: number;
-  minimumPurchase?: number;
-  activeStatus: boolean;
-}
