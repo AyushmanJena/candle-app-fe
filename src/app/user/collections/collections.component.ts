@@ -8,9 +8,6 @@ import {RouterOutlet} from '@angular/router';
 @Component({
   selector: 'app-collections',
   imports: [
-    HeroSectionComponent,
-    NgForOf,
-    ProductCardComponent,
     RouterOutlet
   ],
   templateUrl: './collections.component.html',
