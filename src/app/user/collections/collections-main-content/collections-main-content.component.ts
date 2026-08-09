@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductCardComponent} from '../../homepage/product-card/product-card.component';
 import {NgForOf} from '@angular/common';
-import {CollectionCardData} from '../../../products.interface';
+import {CollectionCardData} from '../../interface/Collections.interface';
 import {Router} from '@angular/router';
 import { CollectionsApiService } from '../../services/collections-api.service';
 

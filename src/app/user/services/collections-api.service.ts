@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CollectionCardData } from '../../products.interface';
+import { CollectionCardData } from '../interface/Collections.interface';
 
 @Injectable({
   providedIn: 'root'

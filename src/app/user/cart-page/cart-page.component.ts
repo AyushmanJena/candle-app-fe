@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { CartItem, CartService } from '../../shared/services/cart-service.service';
 import { ProductsApiService } from '../services/products-api.service';
-import { ProductCardData } from '../../products.interface';
 import { forkJoin } from 'rxjs';
+import { ProductCardData } from '../interface/Product.interface';
+import { CartProduct, Coupon } from '../interface/CartProduct.interface';
 
 @Component({
   selector: 'app-cart-page',
@@ -124,18 +125,3 @@ export class CartPageComponent implements OnInit {
   }
 }
 
-export interface CartProduct {
-  productId: number;
-  title: string;
-  imageUrl: string;
-  originalPrice?: number;
-  discountedPrice: number;
-  quantity: number;
-}
-
-export interface Coupon {
-  couponCode: string;
-  couponType: string; // percentage, amount
-  couponValue: number; // 10%      , rupees 100
-  discountAmount: number;
-}

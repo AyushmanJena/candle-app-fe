@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {ProductCardData} from '../../../products.interface';
 import {NgIf} from '@angular/common';
-import {CartProduct} from '../cart-page.component';
 import { CartService } from '../../../shared/services/cart-service.service';
+import { CartProduct } from '../../interface/CartProduct.interface';
 
 @Component({
   selector: 'app-cart-product-card',

@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {CollectionCardData} from '../../../products.interface';
+import {CollectionCardData} from '../../interface/Collections.interface';
 
 @Component({
   selector: 'app-collection-card',

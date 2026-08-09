@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HomePageData } from '../interface/HomePageData.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,4 @@ export class HomepageApiService {
     return this.http.get<HomePageData>(this.baseUrl + 'home-data');
   }
 
-
-}
-
-interface HomePageData{
-  bannerImageUrls: string[];
-  featuredCollections: number[];
-  bestSellers: number[];
-  reviews: string[];
 }

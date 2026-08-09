@@ -1,9 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ProductCardComponent } from '../homepage/product-card/product-card.component';
 import { NgForOf, NgIf } from '@angular/common';
-import { ProductCardData } from '../../products.interface';
 import { FormsModule } from '@angular/forms';
 import {ProductsApiService} from '../services/products-api.service';
+import { ProductCardData } from '../interface/Product.interface';
 
 @Component({
   selector: 'app-listing-page',

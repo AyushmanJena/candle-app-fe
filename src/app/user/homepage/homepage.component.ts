@@ -4,12 +4,13 @@ import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { CollectionCardComponent } from '../collections/collection-card/collection-card.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { NgForOf } from '@angular/common';
-import { CollectionCardData, ProductCardData } from '../../products.interface';
 import { HomepageApiService } from '../services/homepage-api.service';
 import { ProductsApiService } from '../services/products-api.service';
 import { CollectionsApiService } from '../services/collections-api.service';
 import { forkJoin } from 'rxjs';
 import { NgxTypedJsModule } from 'ngx-typed-js';
+import { CollectionCardData } from '../interface/Collections.interface';
+import { ProductCardData } from '../interface/Product.interface';
 
 @Component({
   selector: 'app-homepage',
