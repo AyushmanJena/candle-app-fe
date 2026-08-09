@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OrdersList } from '../dashboard/admin-orders/admin-orders.component';
-import { OrderDetails } from '../../user/interface/TrackOrderDetails.interface';
 import { OrderDetailsResponse } from '../interfaces/orders.interface';
 
 @Injectable({

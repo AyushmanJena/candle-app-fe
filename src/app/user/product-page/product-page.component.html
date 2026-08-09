@@ -7,17 +7,17 @@
 
         <!-- IMAGE -->
         <img *ngIf="images?.length" [src]="images[currentImageIndex]" alt="Product Image"
-          class="w-full h-full object-cover rounded-lg transition-opacity duration-300" />
+          class="w-full h-full object-cover rounded-lg transition-opacity duration-300 cursor-pointer" (click)="openGallery()"/>
 
         <!-- PREV BUTTON -->
         <button (click)="prevImage()" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white
-           p-2 rounded-full opacity-0 group-hover:opacity-100 transition">
+           p-2 rounded-full opacity-0 group-hover:opacity-100 transition cursor-pointer hover:bg-gray-700">
           ◁
         </button>
 
         <!-- NEXT BUTTON -->
         <button (click)="nextImage()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white
-           p-2 rounded-full opacity-0 group-hover:opacity-100 transition">
+           p-2 rounded-full opacity-0 group-hover:opacity-100 transition cursor-pointer hover:bg-gray-700">
           ▷
         </button>
       </div>
@@ -83,3 +83,5 @@
     </div>
   </div>
 </div>
+
+<app-image-carousel></app-image-carousel>

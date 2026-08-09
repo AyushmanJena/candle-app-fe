@@ -8,7 +8,6 @@ import {MatCardModule} from '@angular/material/card';
 import {CommonModule, NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { OrdersManagementService } from '../../services/orders-management.service';
-import { OrderDetails } from '../../../user/interface/TrackOrderDetails.interface';
 import { OrderDetailsResponse } from '../../interfaces/orders.interface';
 
 @Component({

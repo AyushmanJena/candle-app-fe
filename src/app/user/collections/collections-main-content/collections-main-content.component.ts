@@ -8,7 +8,6 @@ import { CollectionsApiService } from '../../services/collections-api.service';
 @Component({
   selector: 'app-collections-main-content',
   imports: [
-    ProductCardComponent,
     NgForOf
   ],
   templateUrl: './collections-main-content.component.html',

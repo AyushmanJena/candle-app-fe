@@ -8,6 +8,8 @@
                 <div *ngIf="showError" class="text-red-600 mt-4">Order not found. Please check the Order ID and try again.</div>
         </div>
     </div>
+
+    <!-- Order details -->
     <div class="flex flex-col items-center justify-center gap-6 min-w-[700px] max-w-[1200px]" *ngIf="showPreviousOrderDetails">
         <div class="relative flex justify-between">
             <!-- Background track -->
@@ -34,17 +36,18 @@
             <div>
                 <h2 class="text-xl font-bold tracking-wider">Order Id : {{orderDetails.orderId}}</h2>
                 <p class="text-gray-600 mt-2">Expected Delivery: {{orderDetails.expectedDelivery}}</p>
-                <p class="text-gray-600 mt-1">Delivery Address: {{orderDetails.customerDetails.deliveryAddress}}</p>
-                <p class="text-gray-600 mt-1">Phone Number: {{orderDetails.customerDetails.phoneNumber}}</p>
-                <p class="text-gray-600 mt-1">Email Address: {{orderDetails.customerDetails.emailAddress}}</p>
-                <p class="text-gray-600 mt-1">Payment Method: {{orderDetails.customerDetails.paymentMethod}}</p>
+                <p class="text-gray-600 mt-2">Customer Name: {{orderDetails.customerName}}</p>
+                <p class="text-gray-600 mt-1">Delivery Address: {{orderDetails.deliveryAddress}}</p>
+                <p class="text-gray-600 mt-1">Phone Number: {{orderDetails.phoneNumber}}</p>
+                <p class="text-gray-600 mt-1">Email Address: {{orderDetails.emailAddress}}</p>
+                <p class="text-gray-600 mt-1">Payment Method: {{orderDetails.paymentMethod}}</p>
             </div>
             <div>
                 <div class="flex flex-col w-full gap-2 mb-3 ">
                     Ordered Items :
-                    <div class="flex flex-row w-full  h-22 " *ngFor="let product of orderDetails.items">
-                        <div class="w-[20%] bg-blue-400 h-full">
-                            <img src="{{ product.imageUrl }}" alt="Product Image" class="w-full h-full object-cover">
+                    <div class="flex flex-row w-full  h-22 " *ngFor="let product of orderItems">
+                        <div class="w-[20%] border border-gray-600 rounded-sm  h-full">
+                            <img src="{{ product.imageUrl }}" alt="Product Image" class="w-full h-full object-cover rounded-sm cursor-pointer" (click)="redirectToProductDetailsPage(product.productId)">
                         </div>
                         <div class="flex flex-row justify-between items-center w-full mx-4">
                             <div class="flex flex-col gap-2  ">
