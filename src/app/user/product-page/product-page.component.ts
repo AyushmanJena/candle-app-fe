@@ -7,14 +7,17 @@ import { ProductsApiService } from '../services/products-api.service';
 import { forkJoin } from 'rxjs';
 import {CartService} from '../../shared/services/cart-service.service';
 import { ActivatedRoute } from '@angular/router';
+import { ImageViewerService } from './image-carousel/image-viewer.service';
+import { ImageCarouselComponent } from "./image-carousel/image-carousel.component";
 
 @Component({
   selector: 'app-product-page',
   imports: [
     NgIf,
     NgForOf,
-    ProductCardComponent
-  ],
+    ProductCardComponent,
+    ImageCarouselComponent
+],
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.css'
 })
@@ -36,6 +39,7 @@ export class ProductPageComponent implements OnInit {
     private http: HttpClient,
     private productApiService: ProductsApiService,
     private cartService: CartService,
+    private imageViewer : ImageViewerService,
   ) { }
 
   ngOnInit() {
@@ -105,5 +109,11 @@ export class ProductPageComponent implements OnInit {
   prevImage() {
     this.currentImageIndex =
       (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+  }
+
+  openGallery() {
+    this.imageViewer.open(
+      this.images,0
+    );
   }
 }
