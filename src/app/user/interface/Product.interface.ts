@@ -8,14 +8,6 @@ export interface ProductCardData{
   inStock: boolean;
 }
 
-export interface CollectionCardData{
-  collectionId: number;
-  title: string;
-  imageUrl: string;
-  url: string;
-  productsList: number[];
-}
-
 export interface ProductDetails{
   productId: number;
   title: string;
@@ -31,10 +23,4 @@ export interface ProductImage{
   displayOrder: number;
   imageId: number;
   imageUrl: string;
-}
-
-export interface CollectionList{
-  collectionId: number;
-  collectionTitle: string;
-  productsList: Array<ProductCardData>;
 }

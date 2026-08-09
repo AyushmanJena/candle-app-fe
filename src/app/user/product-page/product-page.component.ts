@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { ProductCardData, ProductDetails } from '../../products.interface';
 import { ProductCardComponent } from '../homepage/product-card/product-card.component';
 import { HttpClient } from '@angular/common/http';
 import { ProductsApiService } from '../services/products-api.service';
@@ -9,6 +8,7 @@ import {CartService} from '../../shared/services/cart-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImageViewerService } from './image-carousel/image-viewer.service';
 import { ImageCarouselComponent } from "./image-carousel/image-carousel.component";
+import { ProductCardData, ProductDetails } from '../interface/Product.interface';
 
 @Component({
   selector: 'app-product-page',

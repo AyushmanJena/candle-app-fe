@@ -8,7 +8,7 @@ import {MatCardModule} from '@angular/material/card';
 import {CommonModule, NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { OrdersManagementService } from '../../services/orders-management.service';
-import { OrderDetailsResponse } from '../../interfaces/orders.interface';
+import { OrderDetailsResponse, OrdersList } from '../../interfaces/orders.interface';
 
 @Component({
   selector: 'app-admin-orders',
@@ -103,23 +103,3 @@ export class AdminOrdersComponent implements OnInit {
 
 }
 
-export interface OrdersList{
-  orderId: number;
-  customerName: string;
-  phoneNumber: string;
-  // customerPinCode: number;
-  orderItemsCount: number;
-  orderAmount: number;
-  orderStatus: string;
-
-
-  // this will be imported and used by Checkout page as well
-  // do not fetch all the details in the list instead fetch only on clicking view Action button
-  // completeCustomerDetails: CheckOutModel;
-  // orderList: ProductsList[];
-
-}
-
-export interface CheckOutModel {
-  customerEmail: string;
-}

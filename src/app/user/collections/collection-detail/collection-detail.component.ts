@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {CollectionCardData, ProductCardData} from '../../../products.interface';
 import {NgForOf} from '@angular/common';
 import {ProductCardComponent} from '../../homepage/product-card/product-card.component';
 import { ActivatedRoute } from '@angular/router';
 import { CollectionsApiService } from '../../services/collections-api.service';
 import { ProductsApiService } from '../../services/products-api.service';
+import { ProductCardData } from '../../interface/Product.interface';
+import { CollectionCardData } from '../../interface/Collections.interface';
 
 @Component({
   selector: 'app-collection-detail',

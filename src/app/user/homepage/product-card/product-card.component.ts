@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ProductCardData} from '../../../products.interface';
 import {Router} from '@angular/router';
 import { CartService } from '../../../shared/services/cart-service.service';
+import { ProductCardData } from '../../interface/Product.interface';
 
 @Component({
   selector: 'app-product-card',
