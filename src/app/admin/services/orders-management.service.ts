@@ -1,6 +1,8 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { OrderDetailsResponse, OrdersList } from '../interfaces/orders.interface';
+import { DeliveryStatus } from '../../user/interface/TrackOrderDetails.interface';
+import { MockAdminApiService } from '../../mock/mock-admin-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,21 +10,18 @@ import { OrderDetailsResponse, OrdersList } from '../interfaces/orders.interface
 export class OrdersManagementService {
 
   constructor(
-    private http: HttpClient,
+    private mockAdminApiService: MockAdminApiService,
   ) { }
 
-  private baseUrl = "http://localhost:8080/";
-
-  getAllOrders(){
-    return this.http.get<OrdersList[]>(this.baseUrl + 'admin/orders');
+  getAllOrders(): Observable<OrdersList[]> {
+    return this.mockAdminApiService.getAllOrders();
   }
 
-  getOrderDetailsById(orderId: number){
-    return this.http.get<OrderDetailsResponse>(this.baseUrl + 'orders/' + orderId);
+  getOrderDetailsById(orderId: number): Observable<OrderDetailsResponse> {
+    return this.mockAdminApiService.getOrderDetailsById(orderId);
   }
 
-  changeOrderStatus(orderId: number, newStatus: string){
-    const params = new HttpParams().set('status', newStatus);
-    return this.http.patch(this.baseUrl + 'admin/orders/' + orderId + '/status', null, {params});
+  changeOrderStatus(orderId: number, newStatus: DeliveryStatus): Observable<OrderDetailsResponse> {
+    return this.mockAdminApiService.changeOrderStatus(orderId, newStatus);
   }
 }

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CouponRequest, CouponsList } from '../interfaces/coupons.interface';
 import { Observable } from 'rxjs';
+import { MockAdminApiService } from '../../mock/mock-admin-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,29 +9,17 @@ import { Observable } from 'rxjs';
 export class CouponsManagementService {
 
   constructor(
-    private http: HttpClient,
+    private mockAdminApiService: MockAdminApiService,
   ) { }
-
-  private baseUrl = "http://localhost:8080/";
-
   getAllCoupons(): Observable<CouponsList[]> {
-    return this.http.get<CouponsList[]>(this.baseUrl + 'admin/coupon');
+    return this.mockAdminApiService.getAllCoupons();
   }
 
-  createCoupon(formValue: any){
-    const request: CouponRequest = {
-      couponCode: formValue.couponCode,
-      discountPercentage: formValue.discountPercentage,
-      minimumPurchase: formValue.minimumPurchase,
-      activeStatus: true, // by default the coupon will be active when created
-    };
-  
-    return this.http.post(this.baseUrl + 'admin/coupon', request);
+  createCoupon(formValue: any): Observable<CouponsList> {
+    return this.mockAdminApiService.createCoupon(formValue);
   }
 
-  changeCouponStatus(couponId: number){
-    console.log("toggled ", couponId);
-    return this.http.put(this.baseUrl + 'admin/coupon/toggle-status/' + couponId, null);
-
+  changeCouponStatus(couponId: number): Observable<CouponsList> {
+    return this.mockAdminApiService.changeCouponStatus(couponId);
   }
 }

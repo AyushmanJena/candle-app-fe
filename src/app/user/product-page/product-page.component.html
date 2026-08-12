@@ -35,12 +35,20 @@
         <div class="mt-4 w-42">
 
           <!-- Add Button -->
-          <button *ngIf="inCartQuantity == 0" (click)="addProductToCart()" class="w-full h-10 text-sm font-medium
+          <button *ngIf="product.quantityAvailable != 0 && inCartQuantity == 0" (click)="addProductToCart()" class="w-full h-10 text-sm font-medium
            border border-neutral-900
            rounded-md
            hover:bg-neutral-900 hover:text-white
            transition-all duration-200 cursor-pointer">
             Add To Cart
+          </button>
+
+          <button *ngIf="product.quantityAvailable == 0" (click)="addProductToCart()" class="w-full h-10 text-sm font-medium
+           border border-neutral-900
+           rounded-md
+           hover:bg-neutral-900 hover:text-white
+           transition-all duration-200 cursor-pointer">
+            Out of Stock
           </button>
 
           <!-- Quantity Controls -->

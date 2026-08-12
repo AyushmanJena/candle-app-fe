@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,8 @@ import { Injectable } from '@angular/core';
 export class CartService {
 
   private STORAGE_KEY = 'cartItems';
-  cartItems: CartItem[] =[];
+  private readonly cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
+  cartItems$ = this.cartItemsSubject.asObservable();
 
   constructor() {
     this.loadCartItems();
@@ -14,46 +16,65 @@ export class CartService {
 
   private loadCartItems(){
     const data = localStorage.getItem(this.STORAGE_KEY);
-    this.cartItems = data ? JSON.parse(data) : []; 
+    const items: CartItem[] = data ? JSON.parse(data) : [];
+    this.cartItemsSubject.next(items);
   }
 
   private saveCart() {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.cartItemsSubject.value));
+  }
+
+  private setCartItems(items: CartItem[]) {
+    this.cartItemsSubject.next(items);
+    this.saveCart();
   }
   
 
   addToCart(productId: number){
-    if(this.cartItems.some(item => item.productId === productId)){
-      const itemIndex = this.cartItems.findIndex(item => item.productId === productId);
-      this.cartItems[itemIndex].quantity++;
+    const cartItems = [...this.cartItemsSubject.value];
+
+    if(cartItems.some(item => item.productId === productId)){
+      const itemIndex = cartItems.findIndex(item => item.productId === productId);
+      cartItems[itemIndex] = {
+        ...cartItems[itemIndex],
+        quantity: cartItems[itemIndex].quantity + 1
+      };
     } else  {
-      this.cartItems.push({productId, quantity: 1});
+      cartItems.push({productId, quantity: 1});
     }
-    this.saveCart();
-    // console.log(this.cartItems);
+    this.setCartItems(cartItems);
   }
 
   removeFromCart(productId: number){
-    if(this.cartItems.some(item => item.productId === productId) && this.cartItems.find(item => item.productId === productId)?.quantity! > 1){
-      const itemIndex = this.cartItems.findIndex(item => item.productId === productId);
-      this.cartItems[itemIndex].quantity--;
-    } else if(this.cartItems.some(item => item.productId === productId) && this.cartItems.find(item => item.productId === productId)?.quantity! <= 1){
-      this.cartItems = this.cartItems.filter(item => item.productId !== productId);
+    const cartItems = [...this.cartItemsSubject.value];
+    const itemIndex = cartItems.findIndex(item => item.productId === productId);
+
+    if(itemIndex === -1){
+      return;
     }
-    this.saveCart();
-    // console.log(this.cartItems);
+
+    if(cartItems[itemIndex].quantity > 1){
+      cartItems[itemIndex] = {
+        ...cartItems[itemIndex],
+        quantity: cartItems[itemIndex].quantity - 1
+      };
+    } else {
+      cartItems.splice(itemIndex, 1);
+    }
+
+    this.setCartItems(cartItems);
   }
 
   getCartItems(){
-    return this.cartItems;
+    return [...this.cartItemsSubject.value];
   }
 
   getCartItemQuantityById(productId: number){
-    return this.cartItems.find(item => item.productId === productId)?.quantity || 0;
+    return this.cartItemsSubject.value.find(item => item.productId === productId)?.quantity || 0;
   }
 
   clearCart() {
-    this.cartItems = [];
+    this.cartItemsSubject.next([]);
     localStorage.removeItem(this.STORAGE_KEY);
   }
 

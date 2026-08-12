@@ -4,6 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {ProductsApiService} from '../services/products-api.service';
 import { ProductCardData } from '../interface/Product.interface';
+import { MockApiService } from '../../mock/mock-api.service';
 
 @Component({
   selector: 'app-listing-page',
@@ -32,7 +33,7 @@ export class ListingPageComponent implements OnInit {
   };
 
   constructor(
-    private productsApiService: ProductsApiService,
+    private productsApiService: MockApiService,
   ) {
   }
 

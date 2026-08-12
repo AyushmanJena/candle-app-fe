@@ -6,6 +6,7 @@ import { CollectionsApiService } from '../../services/collections-api.service';
 import { ProductsApiService } from '../../services/products-api.service';
 import { ProductCardData } from '../../interface/Product.interface';
 import { CollectionCardData } from '../../interface/Collections.interface';
+import { MockApiService } from '../../../mock/mock-api.service';
 
 @Component({
   selector: 'app-collection-detail',
@@ -21,8 +22,8 @@ export class CollectionDetailComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private collectionApiService: CollectionsApiService,
-    private productApiService: ProductsApiService,
+    private collectionApiService: MockApiService,
+    private productApiService: MockApiService,
   ){}
 
   collectionCardData!: CollectionCardData;

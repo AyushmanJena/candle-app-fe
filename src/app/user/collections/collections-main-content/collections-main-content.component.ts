@@ -3,6 +3,7 @@ import {NgForOf} from '@angular/common';
 import {CollectionCardData} from '../../interface/Collections.interface';
 import {Router} from '@angular/router';
 import { CollectionsApiService } from '../../services/collections-api.service';
+import { MockApiService } from '../../../mock/mock-api.service';
 
 @Component({
   selector: 'app-collections-main-content',
@@ -17,7 +18,7 @@ export class CollectionsMainContentComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private collectionsApiService: CollectionsApiService,
+    private collectionsApiService: MockApiService,
   ) {
   }
 

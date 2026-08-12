@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import { Router } from '@angular/router';
 import {CollectionCardData} from '../../interface/Collections.interface';
 
 @Component({
@@ -10,5 +11,11 @@ import {CollectionCardData} from '../../interface/Collections.interface';
 export class CollectionCardComponent {
   @Input()
   collectionData!: CollectionCardData;
+
+  constructor(private router: Router) {}
+
+  navigateToCollectionDetails() {
+    this.router.navigateByUrl(this.collectionData.url);
+  }
 }
 

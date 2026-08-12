@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Router} from '@angular/router';
 import { CartService } from '../../../shared/services/cart-service.service';
 import { ProductCardData } from '../../interface/Product.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
@@ -10,7 +11,7 @@ import { ProductCardData } from '../../interface/Product.interface';
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent implements OnInit, OnDestroy {
 
     @Input()
   showAddToCartButton! : boolean;
@@ -19,6 +20,7 @@ export class ProductCardComponent implements OnInit {
   productCardData!: ProductCardData;
 
   inCartQuantity: number = 0;
+  private cartSubscription?: Subscription;
 
   constructor(
     private router: Router,
@@ -27,8 +29,15 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit(){
     this.inCartQuantity = this.cartService.getCartItemQuantityById(this.productCardData.productId);
+    this.cartSubscription = this.cartService.cartItems$.subscribe(() => {
+      this.inCartQuantity = this.cartService.getCartItemQuantityById(this.productCardData.productId);
+    });
 
   } 
+
+  ngOnDestroy(): void {
+    this.cartSubscription?.unsubscribe();
+  }
 
   redirectToProductDetails(productId: number){
     this.router.navigateByUrl('/product/'+productId);

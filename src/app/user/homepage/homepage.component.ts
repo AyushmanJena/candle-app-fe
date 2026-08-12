@@ -11,6 +11,7 @@ import { forkJoin } from 'rxjs';
 import { NgxTypedJsModule } from 'ngx-typed-js';
 import { CollectionCardData } from '../interface/Collections.interface';
 import { ProductCardData } from '../interface/Product.interface';
+import { MockApiService } from '../../mock/mock-api.service';
 
 @Component({
   selector: 'app-homepage',
@@ -28,9 +29,9 @@ export class HomepageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private homepageApiService: HomepageApiService,
-    private productsApiService: ProductsApiService,
-    private collectionsApiService: CollectionsApiService
+    private homepageApiService: MockApiService,
+    private productsApiService: MockApiService,
+    private collectionsApiService: MockApiService
   ) {
   }
 

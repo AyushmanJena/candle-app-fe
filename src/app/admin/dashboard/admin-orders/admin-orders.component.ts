@@ -9,6 +9,7 @@ import {CommonModule, NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { OrdersManagementService } from '../../services/orders-management.service';
 import { OrderDetailsResponse, OrdersList } from '../../interfaces/orders.interface';
+import { DeliveryStatus } from '../../../user/interface/TrackOrderDetails.interface';
 
 @Component({
   selector: 'app-admin-orders',
@@ -84,7 +85,7 @@ export class AdminOrdersComponent implements OnInit {
     });
   }
 
-  changeOrderStatus(orderId: number, newStatus: string){
+  changeOrderStatus(orderId: number, newStatus: DeliveryStatus){
    this.ordersManagementService.changeOrderStatus(orderId, newStatus)
     .subscribe({
       next: (res) => {

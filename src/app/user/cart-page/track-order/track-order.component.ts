@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductsApiService } from '../../services/products-api.service';
 import { forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { MockApiService } from '../../../mock/mock-api.service';
 
 @Component({
   selector: 'app-track-order',
@@ -64,21 +65,36 @@ export class TrackOrderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private trackOrderApiService: TrackOrderApiService,
-    private productsApiService: ProductsApiService,
+    private trackOrderApiService: MockApiService,
+    private productsApiService: MockApiService,
   ) { }
 
   ngOnInit() {
+    this.resetView();
   }
 
+  private resetView() {
+    this.showPreviousOrderDetails = false;
+    this.showError = false;
+    this.orderDetails = undefined as unknown as OrderDetailsResponse;
+    this.orderItems = [];
+    this.currentStatus = undefined as unknown as DeliveryStatus;
+  }
 
   loadOrderDetails(orderId: number) {
+    if (!orderId || Number.isNaN(orderId)) {
+      this.showError = true;
+      this.showPreviousOrderDetails = false;
+      return;
+    }
+
     this.trackOrderApiService.getOrderDetailsById(orderId).subscribe({
       next: (data) => {
         this.showError = false;
         this.orderDetails = data;
-        this.loadOrderItemsDetails();
         this.currentStatus = this.orderDetails.orderStatus;
+        this.loadOrderItemsDetails();
+        this.showPreviousOrderDetails = true;
         // console.log("Order details loaded: ", this.orderDetails);
       },
       error: (error) => {
@@ -113,9 +129,9 @@ export class TrackOrderComponent implements OnInit {
 
   trackOrder() {
     // call loadOrderDetails with userEnteredOrderId
+    this.resetView();
     console.log("Tracking order with ID: ", this.userEnteredOrderId);
     this.loadOrderDetails(this.userEnteredOrderId);
-    this.showPreviousOrderDetails = true;
   }
 
   redirectToProductDetailsPage(productId: number) {

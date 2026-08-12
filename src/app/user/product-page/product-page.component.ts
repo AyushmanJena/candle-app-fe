@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { ProductCardComponent } from '../homepage/product-card/product-card.component';
 import { HttpClient } from '@angular/common/http';
 import { ProductsApiService } from '../services/products-api.service';
-import { forkJoin } from 'rxjs';
+import { Subject, forkJoin, takeUntil } from 'rxjs';
 import {CartService} from '../../shared/services/cart-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ImageViewerService } from './image-carousel/image-viewer.service';
 import { ImageCarouselComponent } from "./image-carousel/image-carousel.component";
 import { ProductCardData, ProductDetails } from '../interface/Product.interface';
+import { MockApiService } from '../../mock/mock-api.service';
 
 @Component({
   selector: 'app-product-page',
@@ -21,12 +22,13 @@ import { ProductCardData, ProductDetails } from '../interface/Product.interface'
   templateUrl: './product-page.component.html',
   styleUrl: './product-page.component.css'
 })
-export class ProductPageComponent implements OnInit {
+export class ProductPageComponent implements OnInit, OnDestroy {
 
   bestSellersList!: ProductCardData[];
 
   product!: ProductDetails;
   inCartQuantity: number = 0;
+  private readonly destroy$ = new Subject<void>();
 
   // image carousel
   currentImageIndex = 0;
@@ -36,15 +38,35 @@ export class ProductPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private productApiService: ProductsApiService,
+    private productApiService: MockApiService,
     private cartService: CartService,
     private imageViewer : ImageViewerService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
-    this.productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadProductDetails();
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params => {
+        this.productId = Number(params.get('id'));
+        this.currentImageIndex = 0;
+        this.bestSellersList = [];
+        this.images = [];
+        this.loadProductDetails();
+      });
+
+    this.cartService.cartItems$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (this.product) {
+          this.inCartQuantity = this.cartService.getCartItemQuantityById(this.product.productId);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadProductDetails() {
@@ -86,34 +108,60 @@ export class ProductPageComponent implements OnInit {
   }
 
   addProductToCart() {
+    if (!this.product || this.product.quantityAvailable === 0) {
+      return;
+    }
     console.log('Product added to cart');
-    this.inCartQuantity++;
     this.cartService.addToCart(this.product.productId);
   }
 
   increaseQuantity() {
+    const availableQuantity = this.product?.quantityAvailable ?? 0;
+
+    if (!this.product || availableQuantity === 0) {
+      return;
+    }
+    if (this.inCartQuantity >= availableQuantity) {
+      return;
+    }
     this.inCartQuantity++;
     this.cartService.addToCart(this.product.productId);
   }
 
   decreaseQuantity() {
+    if (!this.product) {
+      return;
+    }
     this.inCartQuantity--;
-    this.cartService.addToCart(this.product.productId);
+    this.cartService.removeFromCart(this.product.productId);
   }
 
   nextImage() {
+    if (this.images.length === 0) {
+      return;
+    }
     this.currentImageIndex =
       (this.currentImageIndex + 1) % this.images.length;
   }
 
   prevImage() {
+    if (this.images.length === 0) {
+      return;
+    }
     this.currentImageIndex =
       (this.currentImageIndex - 1 + this.images.length) % this.images.length;
   }
 
   openGallery() {
+    if (this.images.length === 0) {
+      return;
+    }
     this.imageViewer.open(
       this.images,0
     );
+  }
+
+  navigateToProductDetails(productId: number) {
+    this.router.navigateByUrl('/product/' + productId);
   }
 }

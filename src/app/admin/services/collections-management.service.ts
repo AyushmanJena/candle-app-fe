@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CollectionRequest, CollectionsList } from '../interfaces/collections.interface';
+import { MockAdminApiService } from '../../mock/mock-admin-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,42 +9,26 @@ import { CollectionRequest, CollectionsList } from '../interfaces/collections.in
 export class CollectionsManagementService {
 
   constructor(
-    private http: HttpClient,
+    private mockAdminApiService: MockAdminApiService,
   ) { }
 
-  private baseUrl = "http://localhost:8080";
-
-  getAllCollections() {
-    return this.http.get<CollectionsList[]>(this.baseUrl + '/collections');
+  getAllCollections(): Observable<CollectionsList[]> {
+    return this.mockAdminApiService.getAllCollections();
   }
 
-  getCollectionDetailsById(collectionId : number){
-    return this.http.get<CollectionsList>(this.baseUrl + '/collections/' + collectionId);
+  getCollectionDetailsById(collectionId: number): Observable<CollectionsList> {
+    return this.mockAdminApiService.getCollectionDetailsById(collectionId);
   }
 
-  createCollection(formValue: any){
-    const body: CollectionRequest = {
-      title: formValue.title,
-      imageUrl: formValue.imageUrl,
-      productsList: formValue.productsList,
-      url: "/dummy"
-    }
-
-    return this.http.post<any>(this.baseUrl + '/admin/collections', body);
+  createCollection(formValue: any): Observable<CollectionsList> {
+    return this.mockAdminApiService.createCollection(formValue);
   }
 
-  updateCollection(collectionId: number, formValue: any){
-    const body: CollectionRequest = {
-      title: formValue.title,
-      imageUrl: formValue.imageUrl,
-      productsList: formValue.productsList,
-      url: "/dummy"
-    }
-
-    return this.http.put<any>(this.baseUrl + '/admin/collections/' + collectionId, body);
+  updateCollection(collectionId: number, formValue: any): Observable<CollectionsList> {
+    return this.mockAdminApiService.updateCollection(collectionId, formValue);
   }
 
-  deleteCollection(collectionId: number){
-    return this.http.delete<any>(this.baseUrl + '/admin/collections/' + collectionId);
+  deleteCollection(collectionId: number): Observable<void> {
+    return this.mockAdminApiService.deleteCollection(collectionId);
   }
 }
