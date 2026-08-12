@@ -9,7 +9,7 @@ export const MOCK_PRODUCTS: ProductCardData[] = [
   {
     productId: 1,
     title: 'Pikachu',
-    imageUrl: '/images/pikachu1.jpg',
+    imageUrl: 'images/pikachu1.jpg',
     description: 'Pikachu is an adorable electric Pokémon known for its yellow fur, lightning abilities, loyal nature, and iconic cheerful personality.',
     discountedPrice: 799,
     originalPrice: 999,
@@ -19,7 +19,7 @@ export const MOCK_PRODUCTS: ProductCardData[] = [
   {
     productId: 2,
     title: 'Bulbasaur',
-    imageUrl: '/images/bulbasaur1.jpg',
+    imageUrl: 'images/bulbasaur1.jpg',
     description: 'Bulbasaur is a friendly Grass-Poison Pokémon known for the plant bulb on its back, powerful vines, and loyal, gentle nature.',
     discountedPrice: 999,
     originalPrice: 1299,
@@ -29,7 +29,7 @@ export const MOCK_PRODUCTS: ProductCardData[] = [
   {
     productId: 3,
     title: 'Squirtle',
-    imageUrl: '/images/squirtle1.jpg',
+    imageUrl: 'images/squirtle1.jpg',
     description: 'Squirtle is a cute Water-type Pokémon known for its blue shell, powerful water attacks, playful personality, and strong defensive abilities.',
     discountedPrice: 1999,
     originalPrice: 2499,
@@ -39,7 +39,7 @@ export const MOCK_PRODUCTS: ProductCardData[] = [
   {
     productId: 4,
     title: 'Psyduck',
-    imageUrl: '/images/psyduck1.jpg',
+    imageUrl: 'images/psyduck1.jpg',
     description: 'Psyduck is a quirky Water-type Pokémon known for its yellow appearance, constant headaches, confusion, and mysterious psychic abilities when overwhelmed.',
     discountedPrice: 2499,
     originalPrice: 2999,
@@ -49,7 +49,7 @@ export const MOCK_PRODUCTS: ProductCardData[] = [
   {
     productId: 5,
     title: 'Gengar',
-    imageUrl: '/images/gengar1.jpg',
+    imageUrl: 'images/gengar1.jpg',
     description: 'Gengar is a mischievous Ghost-Poison Pokémon known for its shadowy appearance, sinister grin, haunting abilities, and playful love of pranks.',
     discountedPrice: 1499,
     originalPrice: 1799,
@@ -67,17 +67,17 @@ export const MOCK_PRODUCT_DETAILS: ProductDetails[] = [
       {
         displayOrder: 1,
         imageId: 101,
-        imageUrl: '/images/pikachu1.jpg'
+        imageUrl: 'images/pikachu1.jpg'
       },
       {
         displayOrder: 2,
         imageId: 102,
-        imageUrl: '/images/pikachu2.jpg'
+        imageUrl: 'images/pikachu2.jpg'
       },
       {
         displayOrder: 3,
         imageId: 103,
-        imageUrl: '/images/pikachu3.jpg'
+        imageUrl: 'images/pikachu3.jpg'
       }
     ],
 
@@ -100,17 +100,17 @@ export const MOCK_PRODUCT_DETAILS: ProductDetails[] = [
       {
         displayOrder: 1,
         imageId: 201,
-        imageUrl: '/images/bulbasaur1.jpg'
+        imageUrl: 'images/bulbasaur1.jpg'
       },
       {
         displayOrder: 2,
         imageId: 202,
-        imageUrl: '/images/bulbasaur2.jpg'
+        imageUrl: 'images/bulbasaur2.jpg'
       },
       {
         displayOrder: 3,
         imageId: 203,
-        imageUrl: '/images/bulbasaur3.jpg'
+        imageUrl: 'images/bulbasaur3.jpg'
       },
     ],
 
@@ -133,17 +133,17 @@ export const MOCK_PRODUCT_DETAILS: ProductDetails[] = [
       {
         displayOrder: 1,
         imageId: 301,
-        imageUrl: '/images/squirtle1.jpg'
+        imageUrl: 'images/squirtle1.jpg'
       },
       {
         displayOrder: 2,
         imageId: 302,
-        imageUrl: '/images/squirtle2.jpg'
+        imageUrl: 'images/squirtle2.jpg'
       },
       {
         displayOrder: 3,
         imageId: 303,
-        imageUrl: '/images/squirtle3.jpg'
+        imageUrl: 'images/squirtle3.jpg'
       },
     ],
 
@@ -166,17 +166,17 @@ export const MOCK_PRODUCT_DETAILS: ProductDetails[] = [
       {
         displayOrder: 1,
         imageId: 401,
-        imageUrl: '/images/psyduck1.jpg'
+        imageUrl: 'images/psyduck1.jpg'
       },
       {
         displayOrder: 2,
         imageId: 402,
-        imageUrl: '/images/psyduck2.jpg'
+        imageUrl: 'images/psyduck2.jpg'
       },
       {
         displayOrder: 3,
         imageId: 403,
-        imageUrl: '/images/psyduck3.jpg'
+        imageUrl: 'images/psyduck3.jpg'
       },
     ],
 
@@ -199,17 +199,17 @@ export const MOCK_PRODUCT_DETAILS: ProductDetails[] = [
       {
         displayOrder: 1,
         imageId: 501,
-        imageUrl: '/images/gengar1.jpg'
+        imageUrl: 'images/gengar1.jpg'
       },
       {
         displayOrder: 2,
         imageId: 502,
-        imageUrl: '/images/gengar2.jpg'
+        imageUrl: 'images/gengar2.jpg'
       },
       {
         displayOrder: 3,
         imageId: 503,
-        imageUrl: '/images/gengar3.jpg'
+        imageUrl: 'images/gengar3.jpg'
       },
     ],
 
@@ -230,7 +230,7 @@ export const MOCK_COLLECTIONS: CollectionsList[] = [
   {
     collectionId: 1,
     title: 'Team Yellow',
-    imageUrl: '/images/Collection1.jpg',
+    imageUrl: 'images/Collection1.jpg',
     url: '/collections/1',
     productsList: [1, 4]
   },
@@ -238,7 +238,7 @@ export const MOCK_COLLECTIONS: CollectionsList[] = [
   {
     collectionId: 2,
     title: 'The Duo',
-    imageUrl: '/images/Collection2.jpg',
+    imageUrl: 'images/Collection2.jpg',
     url: '/collections/2',
     productsList: [2, 3]
   },
@@ -246,7 +246,7 @@ export const MOCK_COLLECTIONS: CollectionsList[] = [
   {
     collectionId: 3,
     title: 'Ghost Type',
-    imageUrl: '/images/Collection3.jpg',
+    imageUrl: 'images/Collection3.jpg',
     url: '/collections/3',
     productsList: [5]
   }
@@ -283,9 +283,9 @@ export const MOCK_COUPONS: CouponsList[] = [
 export const MOCK_HOMEPAGE_DATA: HomePageData = {
 
   bannerImageUrls: [
-    '/banner/banner1.png',
-    '/banner/banner2.jpg',
-    '/banner/banner3.png'
+    'banner/banner1.png',
+    'banner/banner2.jpg',
+    'banner/banner3.png'
   ],
 
   featuredCollections: [1, 2],
